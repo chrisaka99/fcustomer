@@ -17,7 +17,7 @@
           <li>
             <a href="#"
               ><font-awesome-icon :icon="['fas', 'smile-beam']" /><span
-                class="ml-2"
+                class="ml-3"
                 >Statisfaction</span
               ></a
             >
@@ -25,7 +25,7 @@
           <li>
             <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
               ><font-awesome-icon :icon="['fas', 'file-alt']" /><span
-                class="ml-2"
+                class="ml-3"
                 >Documentation</span
               ></a
             >
@@ -33,7 +33,7 @@
           <li>
             <a href="#"
               ><font-awesome-icon :icon="['fas', 'question']" /><span
-                class="ml-2"
+                class="ml-3"
                 >Préoccupation</span
               ></a
             >
@@ -41,7 +41,7 @@
           <li>
             <a href="#"
               ><font-awesome-icon :icon="['fas', 'lightbulb']" /><span
-                class="ml-2"
+                class="ml-3"
                 >Suggestions</span
               ></a
             >
@@ -52,7 +52,7 @@
       //* CONTENT
       <div id="content">
         <TheNavbar />
-        <div class="container-fluid mt-4">
+        <div class="container-fluid ">
           <div class="row">
             <div class="col ml-5 my-5">
               <p class="display-4">
@@ -62,7 +62,7 @@
             </div>
           </div>
           <div class="row align-self-center align-items-center">
-            <div class="col-6 compo">
+            <div class="col-6">
               <div class="text-center shadow-sm p-2 bg-white">
                 <img
                   class="img-fluid"
@@ -76,7 +76,7 @@
                 <div><button class="boutton">Aller</button></div>
               </div>
             </div>
-            <div class="col-6 compo">
+            <div class="col-6">
               <div class="text-center shadow-sm p-2 bg-white">
                 <img
                   class="img-fluid"
@@ -93,7 +93,7 @@
           </div>
 
           <div class="row align-self-center align-items-center my-3">
-            <div class="col-6 compo">
+            <div class="col-6">
               <div class="text-center shadow-sm p-2 bg-white">
                 <img
                   class="img-fluid"
@@ -107,7 +107,7 @@
                 <div><button class="boutton">Aller</button></div>
               </div>
             </div>
-            <div class="col-6 compo">
+            <div class="col-6">
               <div class="text-center shadow-sm p-2 bg-white">
                 <img
                   class="img-fluid"
@@ -199,13 +199,6 @@ a:focus {
   border: none;
 }
 
-.line {
-  width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed #ddd;
-  margin: 40px 0;
-}
-
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -216,7 +209,7 @@ a:focus {
 }
 
 #sidebar {
-  width: 212px;
+  width: 215px;
   position: fixed;
   top: 0;
   left: 0;
@@ -312,7 +305,8 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-  width: calc(100% -212px);
+  width: calc(100% - 215px) !important;
+  margin-left: 0;
   padding: 2px;
   min-height: 100vh;
   transition: all 0.3s;
