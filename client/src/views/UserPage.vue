@@ -62,7 +62,7 @@
           </div> -->
           <!-- </div> -->
           <!-- <Menu /> -->
-          <TheProfile />
+          <TheFirstProfile />
           <!-- <div class="row align-self-center align-items-center">
             <div class="col-4 shadow-sm compo">Faire des suggestions</div>
             <div class="col-4 shadow-sm compo">
@@ -83,13 +83,13 @@
 <script>
 import TheNavbar from "../components/TheNavbar";
 import Menu from "../components/Menu";
-import TheProfile from "../components/TheProfile";
+import TheFirstProfile from "../components/TheFirstProfile";
 export default {
   name: "UserPage",
   components: {
     TheNavbar,
     Menu,
-    TheProfile,
+    TheFirstProfile,
   },
   // data() {
   //   return {
