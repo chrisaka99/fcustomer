@@ -1,30 +1,45 @@
 <template>
-  <div
-    class="d-flex flex-column flex-md-row align-items-center p-1 px-md-4 mb-1 bg-white border-bottom"
-    id="nav"
-  >
+  <nav class="navbar fixed navbar-expand-lg navbar-light bg-light shadow-none">
+    <div v-if="connected" class="my-md-0 mr-md-3">
+      <button type="button" id="sidebarCollapse" class="btn">
+        <font-awesome-icon :icon="['fas', 'bars']" />
+      </button>
+    </div>
+
     <img
       src="../assets/logo1.png"
       class="my-0 mr-md-auto img-fluid"
-      style="max-height: 50px"
+      style="height: 50px"
       alt="Logo"
     />
-    <!-- <h5 class="">Company name</h5> -->
-    <nav class="my-2 my-md-0 mr-md-3">
+    <div v-if="connected" class="my-md-0 mr-md-3">
+      <TheActiveDropdown />
+    </div>
+    <div v-else>
       <router-link class="p-2 text-dark" to="#">A propos de nous</router-link>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </template>
 
 <script>
+import TheActiveDropdown from "../components/TheActiveDropdown";
 export default {
   name: "TheNavbar",
+  components: {
+    TheActiveDropdown,
+  },
+  props: {
+    connected: {
+      type: Boolean,
+      default: true,
+    },
+  },
 };
 </script>
 
 <style lang="css" scoped>
-#nav {
-  border-bottom: 1px solid #fff !important;
+nav {
+  background-color: #fff !important;
 }
 
 nav .text-dark:hover {

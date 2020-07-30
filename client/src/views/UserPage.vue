@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="container-fluid">
-      //* SIDEBAR
       <nav id="sidebar" class="shadow-sm">
         <div id="sidebar-header">
           <h3>Header</h3>
@@ -49,80 +48,21 @@
         </ul>
       </nav>
 
-      //* CONTENT
       <div id="content">
-        <TheNavbar />
+        <TheNavbar :connected="true" />
         <div class="container-fluid ">
-          <div class="row">
-            <div class="col ml-5 my-5">
+          <!-- <div v-if="longtime"> -->
+          <!-- <div class="row">
+            <div class="col text-center my-5">
               <p class="display-4">
                 Bonjour Mr Adon Patrick,
               </p>
               <p class="lead">bienvenue dans Feedback Customer</p>
             </div>
-          </div>
-          <div class="row align-self-center align-items-center">
-            <div class="col-6">
-              <div class="text-center shadow-sm p-2 bg-white">
-                <img
-                  class="img-fluid"
-                  width="200px"
-                  src="../assets/user_interface.svg"
-                />
-                <h3>Enquête de statisfaction</h3>
-                <div class="text-black-50">
-                  Donnez votre avis sur nos services.
-                </div>
-                <div><button class="boutton">Aller</button></div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="text-center shadow-sm p-2 bg-white">
-                <img
-                  class="img-fluid"
-                  width="200px"
-                  src="../assets/files_and_folder_isometric.svg"
-                />
-                <h3>Documentation</h3>
-                <div class="text-black-50">
-                  Accedez aux fichiers qui vont été partagés.
-                </div>
-                <div><button class="boutton">Aller</button></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row align-self-center align-items-center my-3">
-            <div class="col-6">
-              <div class="text-center shadow-sm p-2 bg-white">
-                <img
-                  class="img-fluid"
-                  width="200px"
-                  src="../assets/question_isometric.svg"
-                />
-                <h3>Préoccupation</h3>
-                <div class="text-black-50">
-                  Vous rencontrez des problèmes ? Faites nous en part.
-                </div>
-                <div><button class="boutton">Aller</button></div>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="text-center shadow-sm p-2 bg-white">
-                <img
-                  class="img-fluid"
-                  width="200px"
-                  src="../assets/receptionist_isometric.svg"
-                />
-                <h3>Suggestions</h3>
-                <div class="text-black-50">
-                  Vous avez des suggestions ? Veuillez nous les soumettre.
-                </div>
-                <div><button class="boutton">Aller</button></div>
-              </div>
-            </div>
-          </div>
-
+          </div> -->
+          <!-- </div> -->
+          <!-- <Menu /> -->
+          <TheProfile />
           <!-- <div class="row align-self-center align-items-center">
             <div class="col-4 shadow-sm compo">Faire des suggestions</div>
             <div class="col-4 shadow-sm compo">
@@ -142,11 +82,23 @@
 
 <script>
 import TheNavbar from "../components/TheNavbar";
+import Menu from "../components/Menu";
+import TheProfile from "../components/TheProfile";
 export default {
   name: "UserPage",
   components: {
     TheNavbar,
+    Menu,
+    TheProfile,
   },
+  // data() {
+  //   return {
+  //     // longtime: {
+  //     //   type: [Boolean],
+  //     //   default: true,
+  //     // },
+  //   };
+  // },
 };
 </script>
 
@@ -159,15 +111,6 @@ export default {
   border-radius: 3px;
   color: black;
 } */
-
-.boutton {
-  margin: 15px 0px;
-  padding: 10px 50px;
-  color: #fff;
-  border: none;
-  background: #06f;
-  border-radius: 2px;
-}
 
 body {
   /* font-family: "Poppins", sans-serif; */
@@ -203,11 +146,6 @@ a:focus {
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
-.wrapper {
-  display: flex;
-  width: 100%;
-}
-
 #sidebar {
   width: 215px;
   position: fixed;
@@ -221,7 +159,7 @@ a:focus {
 }
 
 #sidebar.active {
-  margin-left: -250px;
+  margin-left: -215px;
 }
 
 #sidebar-header {
@@ -305,7 +243,7 @@ a.article:hover {
 ----------------------------------------------------- */
 
 #content {
-  width: calc(100% - 215px) !important;
+  width: calc(100% - 215px);
   margin-left: 0;
   padding: 2px;
   min-height: 100vh;
@@ -329,7 +267,7 @@ a.article:hover {
 
 @media (max-width: 768px) {
   #sidebar {
-    margin-left: -250px;
+    margin-left: -215px;
   }
   #sidebar.active {
     margin-left: 0;
@@ -338,7 +276,7 @@ a.article:hover {
     width: 100%;
   }
   #content.active {
-    width: calc(100% - 250px);
+    width: calc(100% - 215px);
   }
   #sidebarCollapse span {
     display: none;

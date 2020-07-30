@@ -9,10 +9,11 @@ import {
   faLightbulb,
   faFileAlt,
   faSmileBeam,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import router from "./router";
-library.add(faHome, faQuestion, faLightbulb, faFileAlt, faSmileBeam);
+library.add(faHome, faQuestion, faLightbulb, faFileAlt, faSmileBeam, faBars);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;

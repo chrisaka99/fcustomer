@@ -1,0 +1,32 @@
+ <div
+    class="navbar navbar-expand-lg d-flex flex-column flex-md-row align-items-center p-1 px-md-4 mb-1 bg-white border-bottom"
+    id="nav"
+  >
+    <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <img
+      src="../assets/logo1.png"
+      class="my-0 mr-md-auto img-fluid"
+      style="height: 50px"
+      alt="Logo"
+    />
+    <!-- <h5 class="">Company name</h5> -->
+    <nav class="my-2 my-md-0 mr-md-3">
+      <div v-if="connected">
+        <TheActiveDropdown />
+      </div>
+      <div v-else>
+        <router-link class="p-2 text-dark" to="#">A propos de nous</router-link>
+      </div>
+    </nav>
+  </div>
