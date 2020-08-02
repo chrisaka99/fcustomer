@@ -13,6 +13,7 @@ import {
   faSmileBeam,
   faBars,
   faCheck,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import router from "./router";
@@ -31,7 +32,8 @@ library.add(
   faFileAlt,
   faSmileBeam,
   faBars,
-  faCheck
+  faCheck,
+  faEdit
 );
 
 Vue.use(SuiVue);

@@ -30,3 +30,25 @@
       </div>
     </nav>
   </div>
+
+
+  <!-- <div class="form-row">
+              <div class="col">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" id="nom" />
+              </div>
+              <div class="col">
+                <label for="nom">Prenom</label>
+                <input type="text" class="form-control" id="prenom" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" id="nom" />
+              </div>
+              <div class="col-md-6">
+                <label for="prenom">Prenom</label>
+                <input type="text" class="form-control" id="prenom" />
+              </div>
+            </div> -->

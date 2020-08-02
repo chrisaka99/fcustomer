@@ -33,7 +33,7 @@
           </div>
 
           <div class="text-black-50">
-            Accedez aux fichiers qui vont été partagés.
+            Accedez aux fichiers qui ont été partagés.
           </div>
           <div class="col"><button class="boutton">Aller</button></div>
         </div>

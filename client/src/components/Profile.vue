@@ -5,46 +5,89 @@
       style="background-color: #fff;"
     >
       <div class="row">
-        <div class="col-md-4 p-2 bg-white">
-          <div class="radio-buttons">
-            <label class="custom-radio">
-              <input
-                type="radio"
-                name="radio"
-                value="client"
-                v-model="status"
-              />
-              <span class="radio-btn">
-                <span class="icon"
-                  ><font-awesome-icon :icon="['fas', 'check']"
-                /></span>
-                <div class="status-icon text-center">
-                  <img class="img-fluid" src="../assets/businessman.svg" />
-                  <h3>Client</h3>
+        <div class="col-md-12 p-5 bg-white">
+          <div class="row">
+            <div class="col-md-3">
+              <b-avatar text="JD" size="10rem"></b-avatar>
+              <div class="row">
+                <div class="col text-center m-5">
+                  <font-awesome-icon :icon="['fas', 'edit']" /> Modifier
                 </div>
-              </span>
-            </label>
-            <label class="custom-radio">
-              <input
-                type="radio"
-                name="radio"
-                value="etudiant"
-                v-model="status"
-              />
-              <span class="radio-btn">
-                <span class="icon"
-                  ><font-awesome-icon :icon="['fas', 'check']"
-                /></span>
-                <div class="status-icon text-center">
-                  <img class="img-fluid" src="../assets/school.svg" />
-                  <h3>Etudiant</h3>
-                </div>
-              </span>
-            </label>
+              </div>
+            </div>
+            <div class="col-md">
+              <b-form class="ml-4">
+                <h3>Informations relatives au compte</h3>
+                <label for="nom">Identifiant</label>
+                <b-input-group class="mb-3">
+                  <b-input
+                    id="identif"
+                    class="mb-2 mr-sm-2 mb-sm-0"
+                    placeholder="Jane Doe"
+                    name="identif"
+                    readonly
+                  ></b-input>
+                </b-input-group>
+
+                <label for="email">Email</label>
+                <b-input-group class="mb-3">
+                  <b-input
+                    id="email"
+                    type="email"
+                    class="mb-2 mr-sm-2 mb-sm-0"
+                    placeholder="Jane Doe"
+                    name="email"
+                    readonly
+                  ></b-input>
+                </b-input-group>
+
+                <label for="mdp">Mot de passe</label>
+                <b-input-group class="mb-3">
+                  <b-input
+                    id="mdp"
+                    class="mb-2 mr-sm-2 mb-sm-0"
+                    placeholder="Jane Doe"
+                    name="mdp"
+                    readonly
+                  ></b-input>
+                </b-input-group>
+                <hr />
+                <h3>Informations personnelles</h3>
+                <label for="nom">Nom</label>
+                <b-input-group class="mb-3">
+                  <b-input
+                    id="nom"
+                    class="mb-2 mr-sm-2 mb-sm-0"
+                    placeholder="Jane Doe"
+                    name="nom"
+                    readonly
+                  ></b-input>
+                </b-input-group>
+                <label for="prenom">Prenom</label>
+                <b-input-group class="mb-3">
+                  <b-input
+                    id="prenom"
+                    class="mb-2 mr-sm-2 mb-sm-0"
+                    placeholder="Jane Doe"
+                    name="prenom"
+                    readonly
+                  ></b-input>
+                </b-input-group>
+
+                <label for="dateNais">Date de naissance</label>
+                <b-form-datepicker
+                  id="dateNais"
+                  v-model="value"
+                  class="mb-2"
+                  name="dateNais"
+                  disabled
+                ></b-form-datepicker>
+              </b-form>
+            </div>
           </div>
         </div>
 
-        <div class="col-md-6 p-3">
+        <!-- <div class="col-md-6 p-3">
           <div v-show="status === 'client'">
             <div class="col-md-12 offset-sm-2 p-sm-5">
               <div class="mb-sm-5 text-center text-uppercase">
@@ -127,13 +170,15 @@
                   />
                 </div>
                 <div class="form-group">
-                  <b-form-datepicker
-                    id="dateNais"
-                    v-model="value"
-                    class="mb-2"
-                    name="dateNais"
-                    disabled
-                  ></b-form-datepicker>
+                  <label for="nom">Date de naissance</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    autocomplete="off"
+                    id="date_nais"
+                    name="date_nais"
+                    max="2002"
+                  />
                 </div>
                 <b-form-group label="Sexe">
                   <b-form-radio-group
@@ -151,7 +196,7 @@
               </form>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -162,22 +207,10 @@ export default {
   name: "TheFirstProfile",
   data() {
     return {
-      status: "",
-      selected: [], // Must be an array reference!
-      options: [
-        { text: "Masculin", value: "masculin" },
-        { text: "Feminin", value: "feminin" },
-      ],
+      status: "etudiant",
     };
   },
-  computed: {
-    // isClient() {
-    //   return this.current == 1;
-    // },
-    // isEtudiant() {
-    //   return this.current == 2;
-    // },
-  },
+  computed: {},
 };
 </script>
 
