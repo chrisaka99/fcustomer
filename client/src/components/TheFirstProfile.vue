@@ -8,12 +8,7 @@
         <div class="col-md-4 p-2 bg-white">
           <div class="radio-buttons">
             <label class="custom-radio">
-              <input
-                type="radio"
-                name="radio"
-                value="client"
-                v-model="status"
-              />
+              <input type="radio" value="client" v-model="status" />
               <span class="radio-btn">
                 <span class="icon"
                   ><font-awesome-icon :icon="['fas', 'check']"
@@ -24,13 +19,9 @@
                 </div>
               </span>
             </label>
+
             <label class="custom-radio">
-              <input
-                type="radio"
-                name="radio"
-                value="etudiant"
-                v-model="status"
-              />
+              <input type="radio" value="etudiant" v-model="status" />
               <span class="radio-btn">
                 <span class="icon"
                   ><font-awesome-icon :icon="['fas', 'check']"
@@ -38,6 +29,19 @@
                 <div class="status-icon text-center">
                   <img class="img-fluid" src="../assets/school.svg" />
                   <h3>Etudiant</h3>
+                </div>
+              </span>
+            </label>
+
+            <label class="custom-radio">
+              <input type="radio" value="enseignant" v-model="status" />
+              <span class="radio-btn">
+                <span class="icon"
+                  ><font-awesome-icon :icon="['fas', 'check']"
+                /></span>
+                <div class="status-icon text-center">
+                  <img class="img-fluid" src="../assets/teacher.svg" />
+                  <h3>Enseignant</h3>
                 </div>
               </span>
             </label>
@@ -55,27 +59,28 @@
                 class="justify-content-center"
                 action="/something"
                 method="post"
+                key="form-1"
               >
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
+                <b-form-group label="Email" label-for="email-cli">
+                  <b-form-input
+                    id="email-cli"
+                    autocomplete="off"
                     type="email"
-                    class="form-control"
+                    v-model="form1.emailSociete"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Nom de la société" label-for="nom-cli">
+                  <b-form-input
+                    id="nom-cli"
                     autocomplete="off"
-                    id="email"
-                    name="email"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Nom de la société</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    autocomplete="off"
-                    id="nom"
-                    name="nom"
-                  />
-                </div>
+                    type="text"
+                    v-model="form1.nomSociete"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
                 <div class="form-group">
                   <button type="submit" tag="button" class="button btn-block">
                     Valider
@@ -95,54 +100,126 @@
                 class="justify-content-center"
                 action="/something"
                 method="post"
+                key="form-2"
               >
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
+                <b-form-group label="Email" label-for="email-etu">
+                  <b-form-input
+                    id="email-etu"
+                    autocomplete="off"
                     type="email"
-                    class="form-control"
+                    v-model="form2.email"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Nom" label-for="nom-etu">
+                  <b-form-input
+                    id="nom-etu"
                     autocomplete="off"
-                    id="email"
-                    name="email"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Nom </label>
-                  <input
-                    type="password"
-                    class="form-control"
+                    type="text"
+                    v-model="form2.nom"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Prénoms" label-for="prenoms-etu">
+                  <b-form-input
+                    id="prenoms-etu"
                     autocomplete="off"
-                    id="nom"
-                    name="nom"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Prénom</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    autocomplete="off"
-                    id="nom"
-                    name="nom"
-                  />
-                </div>
-                <div class="form-group">
+                    type="text"
+                    v-model="form2.prenom"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                  label="Date de naissance"
+                  label-for="dateNais-etu"
+                >
                   <b-form-datepicker
-                    id="dateNais"
-                    v-model="value"
+                    id="dateNais-etu"
+                    v-model="form2.dateNais"
                     class="mb-2"
-                    name="dateNais"
-                    disabled
                   ></b-form-datepicker>
-                </div>
+                </b-form-group>
+
                 <b-form-group label="Sexe">
                   <b-form-radio-group
-                    id="radio-group-sexe"
+                    id="sexe-etu"
                     v-model="selected"
                     :options="options"
-                    name="sexe"
                   ></b-form-radio-group>
                 </b-form-group>
+
+                <div class="form-group">
+                  <button type="submit" tag="button" class="button btn-block">
+                    Valider
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div v-show="status === 'enseignant'">
+            <div class="col-md-12 offset-sm-2 p-sm-5">
+              <div class="mb-sm-5 text-center text-uppercase">
+                <h1>Welcome cher Professeur</h1>
+              </div>
+              <form
+                @submit.prevent="submitForm"
+                class="justify-content-center"
+                action="/something"
+                method="post"
+                key="form-3"
+              >
+                <b-form-group label="Email" label-for="email-ens">
+                  <b-form-input
+                    id="email-ens"
+                    autocomplete="off"
+                    type="email"
+                    v-model="form2.email"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Nom" label-for="nom-ens">
+                  <b-form-input
+                    id="nom-ens"
+                    autocomplete="off"
+                    type="text"
+                    v-model="form2.nom"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Prénoms" label-for="prenoms-ens">
+                  <b-form-input
+                    id="prenoms-ens"
+                    autocomplete="off"
+                    type="text"
+                    v-model="form2.prenom"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group label="Sexe">
+                  <b-form-radio-group
+                    id="sexe-ens"
+                    v-model="selected"
+                    :options="options"
+                  ></b-form-radio-group>
+                </b-form-group>
+
+                <b-form-group label="Matière" label-for="matiere">
+                  <b-form-input
+                    id="matiere"
+                    autocomplete="off"
+                    type="text"
+                    v-model="form2.matiere"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
                 <div class="form-group">
                   <button type="submit" tag="button" class="button btn-block">
                     Valider
@@ -162,13 +239,33 @@ export default {
   name: "TheFirstProfile",
   data() {
     return {
-      status: "",
-      selected: [], // Must be an array reference!
+      selected: [],
       options: [
         { text: "Masculin", value: "masculin" },
         { text: "Feminin", value: "feminin" },
       ],
+      status: "",
+      form1: {
+        emailSociete: "",
+        nomSociete: "",
+      },
+      form2: {
+        email: "",
+        nom: "",
+        prenom: "",
+        dateNais: "",
+        matiere: "",
+      },
     };
+  },
+  methods: {
+    submitForm() {
+      if (this.status == "client") {
+        alert(JSON.stringify(this.form1));
+      } else {
+        alert(JSON.stringify(this.form2) + this.selected + this.status);
+      }
+    },
   },
   computed: {
     // isClient() {

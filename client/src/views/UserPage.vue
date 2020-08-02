@@ -62,8 +62,9 @@
           </div> -->
           <!-- </div> -->
           <!-- <Menu /> -->
-          <!-- <TheFirstProfile /> -->
-          <Profile />
+          <TheFirstProfile />
+          <!-- <Profile /> -->
+          <!-- <RatingPage /> -->
           <!-- <div class="row align-self-center align-items-center">
             <div class="col-4 shadow-sm compo">Faire des suggestions</div>
             <div class="col-4 shadow-sm compo">
@@ -86,6 +87,7 @@ import TheNavbar from "../components/TheNavbar";
 import Menu from "../components/Menu";
 import TheFirstProfile from "../components/TheFirstProfile";
 import Profile from "../components/Profile";
+import RatingPage from "../components/RatingPage";
 export default {
   name: "UserPage",
   components: {
@@ -93,6 +95,7 @@ export default {
     Menu,
     TheFirstProfile,
     Profile,
+    RatingPage,
   },
   // data() {
   //   return {

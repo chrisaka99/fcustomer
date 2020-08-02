@@ -23,30 +23,24 @@
                 action="/something"
                 method="post"
               >
-                <!-- <div class="error">
-                  Field A is required.
-                </div> -->
                 <div class="form-group">
                   <label for="identif">Identifiant</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    autocomplete="off"
+                  <b-form-input
                     id="identif"
-                    name="identifiant"
-                    v-model="identifiant"
-                  />
+                    type="text"
+                    autocomplete="off"
+                    v-model="form.identifiant"
+                    required
+                  ></b-form-input>
                 </div>
                 <div class="form-group">
                   <label for="mdp">Mot de passe</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    autocomplete="off"
+                  <b-form-input
                     id="mdp"
-                    name="mdp"
-                    v-model="mdp"
-                  />
+                    type="password"
+                    v-model="form.mdp"
+                    required
+                  ></b-form-input>
                 </div>
 
                 <div class="form-group">
@@ -84,25 +78,15 @@ export default {
   },
   data() {
     return {
-      identifiant: null,
-      mdp: null,
-      errors: [],
+      form: {
+        identifiant: "",
+        mdp: "",
+      },
     };
   },
   methods: {
     submitForm: function() {
-      if (this.identifiant && this.mdp) {
-        console.log("success");
-        return true;
-      }
-      this.errors = [];
-
-      if (!this.identifiant) {
-        this.errors.push("Identifiant requis");
-      }
-      if (!this.mdp) {
-        this.errors.push("Mot de passe requis");
-      }
+      alert(JSON.stringify(this.form));
     },
   },
 };

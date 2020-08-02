@@ -19,60 +19,60 @@
               <b-form class="ml-4">
                 <h3>Informations relatives au compte</h3>
                 <label for="nom">Identifiant</label>
-                <b-input-group class="mb-3">
-                  <b-input
+                <b-form-input-group class="mb-3">
+                  <b-form-input
                     id="identif"
                     class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
-                    name="identif"
+                    name="identifiant"
                     readonly
-                  ></b-input>
-                </b-input-group>
+                  ></b-form-input>
+                </b-form-input-group>
 
                 <label for="email">Email</label>
-                <b-input-group class="mb-3">
-                  <b-input
+                <b-form-input-group class="mb-3">
+                  <b-form-input
                     id="email"
                     type="email"
                     class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
                     name="email"
                     readonly
-                  ></b-input>
-                </b-input-group>
+                  ></b-form-input>
+                </b-form-input-group>
 
                 <label for="mdp">Mot de passe</label>
-                <b-input-group class="mb-3">
-                  <b-input
+                <b-form-input-group class="mb-3">
+                  <b-form-input
                     id="mdp"
                     class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
                     name="mdp"
                     readonly
-                  ></b-input>
-                </b-input-group>
+                  ></b-form-input>
+                </b-form-input-group>
                 <hr />
                 <h3>Informations personnelles</h3>
                 <label for="nom">Nom</label>
-                <b-input-group class="mb-3">
-                  <b-input
+                <b-form-input-group class="mb-3">
+                  <b-form-input
                     id="nom"
                     class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
                     name="nom"
                     readonly
-                  ></b-input>
-                </b-input-group>
+                  ></b-form-input>
+                </b-form-input-group>
                 <label for="prenom">Prenom</label>
-                <b-input-group class="mb-3">
-                  <b-input
+                <b-form-input-group class="mb-3">
+                  <b-form-input
                     id="prenom"
                     class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
                     name="prenom"
                     readonly
-                  ></b-input>
-                </b-input-group>
+                  ></b-form-input>
+                </b-form-input-group>
 
                 <label for="dateNais">Date de naissance</label>
                 <b-form-datepicker
