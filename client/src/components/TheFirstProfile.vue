@@ -50,9 +50,9 @@
 
         <div class="col-md-6 p-3">
           <div v-show="status === 'client'">
-            <div class="col-md-12 offset-sm-2 p-sm-5">
+            <div class="col-md-12 offset-md-2 p-sm-5">
               <div class="mb-sm-5 text-center text-uppercase">
-                <h1>Welcome cher client</h1>
+                <h1>Welcome</h1>
               </div>
               <form
                 @submit.prevent="submitForm"
@@ -91,9 +91,9 @@
           </div>
 
           <div v-show="status === 'etudiant'">
-            <div class="col-md-12 offset-sm-2 p-sm-5">
+            <div class="col-md-12 offset-md-2 p-sm-5">
               <div class="mb-sm-5 text-center text-uppercase">
-                <h1>Welcome cher étudiant</h1>
+                <h1>Welcome</h1>
               </div>
               <form
                 @submit.prevent="submitForm"
@@ -161,9 +161,9 @@
           </div>
 
           <div v-show="status === 'enseignant'">
-            <div class="col-md-12 offset-sm-2 p-sm-5">
+            <div class="col-md-12 offset-md-2 p-sm-5">
               <div class="mb-sm-5 text-center text-uppercase">
-                <h1>Welcome cher Professeur</h1>
+                <h1>Welcome Professeur</h1>
               </div>
               <form
                 @submit.prevent="submitForm"
@@ -260,10 +260,12 @@ export default {
   },
   methods: {
     submitForm() {
-      if (this.status == "client") {
+      if (this.status === "client") {
         alert(JSON.stringify(this.form1));
       } else {
-        alert(JSON.stringify(this.form2) + this.selected + this.status);
+        alert(
+          JSON.stringify(this.form2) + " " + this.selected + " " + this.status
+        );
       }
     },
   },

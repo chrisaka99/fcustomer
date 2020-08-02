@@ -7,196 +7,83 @@
       <div class="row">
         <div class="col-md-12 p-5 bg-white">
           <div class="row">
-            <div class="col-md-3">
-              <b-avatar text="JD" size="10rem"></b-avatar>
+            <div class="col-md-3 col-sm-12 text-sm-center text-md-center">
+              <b-avatar text="JD" fluid size="10rem"></b-avatar>
               <div class="row">
                 <div class="col text-center m-5">
                   <font-awesome-icon :icon="['fas', 'edit']" /> Modifier
                 </div>
               </div>
             </div>
+
             <div class="col-md">
               <b-form class="ml-4">
                 <h3>Informations relatives au compte</h3>
-                <label for="nom">Identifiant</label>
-                <b-form-input-group class="mb-3">
+                <b-form-group label="Identifiant" label-for="identif">
                   <b-form-input
                     id="identif"
-                    class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
-                    name="identifiant"
+                    v-model="identifiant"
                     readonly
                   ></b-form-input>
-                </b-form-input-group>
+                </b-form-group>
 
-                <label for="email">Email</label>
-                <b-form-input-group class="mb-3">
+                <b-form-group label="Email" label-for="email">
                   <b-form-input
                     id="email"
                     type="email"
-                    class="mb-2 mr-sm-2 mb-sm-0"
-                    placeholder="Jane Doe"
-                    name="email"
+                    placeholder="JaneDoe@gmail.com"
+                    v-model="email"
                     readonly
                   ></b-form-input>
-                </b-form-input-group>
+                </b-form-group>
 
-                <label for="mdp">Mot de passe</label>
-                <b-form-input-group class="mb-3">
+                <b-form-group label="Mot de passe" label-for="mdp">
                   <b-form-input
                     id="mdp"
-                    class="mb-2 mr-sm-2 mb-sm-0"
                     placeholder="Jane Doe"
                     name="mdp"
+                    v-model="mdp"
                     readonly
                   ></b-form-input>
-                </b-form-input-group>
+                </b-form-group>
                 <hr />
+
                 <h3>Informations personnelles</h3>
-                <label for="nom">Nom</label>
-                <b-form-input-group class="mb-3">
+
+                <b-form-group label="Nom" label-for="nom">
                   <b-form-input
                     id="nom"
-                    class="mb-2 mr-sm-2 mb-sm-0"
-                    placeholder="Jane Doe"
-                    name="nom"
+                    v-model="nom"
+                    placeholder="Jane"
                     readonly
                   ></b-form-input>
-                </b-form-input-group>
-                <label for="prenom">Prenom</label>
-                <b-form-input-group class="mb-3">
-                  <b-form-input
-                    id="prenom"
-                    class="mb-2 mr-sm-2 mb-sm-0"
-                    placeholder="Jane Doe"
-                    name="prenom"
-                    readonly
-                  ></b-form-input>
-                </b-form-input-group>
+                </b-form-group>
 
-                <label for="dateNais">Date de naissance</label>
-                <b-form-datepicker
-                  id="dateNais"
-                  v-model="value"
-                  class="mb-2"
-                  name="dateNais"
-                  disabled
-                ></b-form-datepicker>
+                <b-form-group label="Prénoms" label-for="prenoms">
+                  <b-form-input
+                    id="prenoms"
+                    placeholder="Jane"
+                    v-model="prenoms"
+                    readonly
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group
+                  label="Date de naissance"
+                  label-for="dateNais-etu"
+                >
+                  <b-form-datepicker
+                    id="dateNais-etu"
+                    v-model="dateNais"
+                    class="mb-2"
+                    disabled
+                  ></b-form-datepicker>
+                </b-form-group>
               </b-form>
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-md-6 p-3">
-          <div v-show="status === 'client'">
-            <div class="col-md-12 offset-sm-2 p-sm-5">
-              <div class="mb-sm-5 text-center text-uppercase">
-                <h1>Welcome cher client</h1>
-              </div>
-              <form
-                @submit.prevent="submitForm"
-                class="justify-content-center"
-                action="/something"
-                method="post"
-              >
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    autocomplete="off"
-                    id="email"
-                    name="email"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Nom de la société</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    autocomplete="off"
-                    id="nom"
-                    name="nom"
-                  />
-                </div>
-                <div class="form-group">
-                  <button type="submit" tag="button" class="button btn-block">
-                    Valider
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div v-show="status === 'etudiant'">
-            <div class="col-md-12 offset-sm-2 p-sm-5">
-              <div class="mb-sm-5 text-center text-uppercase">
-                <h1>Welcome cher étudiant</h1>
-              </div>
-              <form
-                @submit.prevent="submitForm"
-                class="justify-content-center"
-                action="/something"
-                method="post"
-              >
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    autocomplete="off"
-                    id="email"
-                    name="email"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Nom </label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    autocomplete="off"
-                    id="nom"
-                    name="nom"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Prénom</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    autocomplete="off"
-                    id="nom"
-                    name="nom"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="nom">Date de naissance</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    autocomplete="off"
-                    id="date_nais"
-                    name="date_nais"
-                    max="2002"
-                  />
-                </div>
-                <b-form-group label="Sexe">
-                  <b-form-radio-group
-                    id="radio-group-sexe"
-                    v-model="selected"
-                    :options="options"
-                    name="sexe"
-                  ></b-form-radio-group>
-                </b-form-group>
-                <div class="form-group">
-                  <button type="submit" tag="button" class="button btn-block">
-                    Valider
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -208,6 +95,12 @@ export default {
   data() {
     return {
       status: "etudiant",
+      identifiant: "",
+      email: "",
+      nom: "",
+      mdp: "",
+      prenoms: "",
+      dateNais: "",
     };
   },
   computed: {},

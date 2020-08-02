@@ -62,8 +62,8 @@
           </div> -->
           <!-- </div> -->
           <!-- <Menu /> -->
-          <TheFirstProfile />
-          <!-- <Profile /> -->
+          <!-- <TheFirstProfile /> -->
+          <Profile />
           <!-- <RatingPage /> -->
           <!-- <div class="row align-self-center align-items-center">
             <div class="col-4 shadow-sm compo">Faire des suggestions</div>
