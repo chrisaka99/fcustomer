@@ -1,9 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
-import SuiVue from "semantic-ui-vue";
-import "semantic-ui-css/semantic.min.css";
+// import SuiVue from "semantic-ui-vue";
+// import "semantic-ui-css/semantic.min.css";
 import "bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faHome,
@@ -14,12 +16,10 @@ import {
   faBars,
   faCheck,
   faEdit,
+  faSave,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import router from "./router";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);
@@ -33,10 +33,11 @@ library.add(
   faSmileBeam,
   faBars,
   faCheck,
-  faEdit
+  faEdit,
+  faSave
 );
 
-Vue.use(SuiVue);
+// Vue.use(SuiVue);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 

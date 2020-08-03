@@ -7,70 +7,40 @@
         </div>
         <ul class="list-unstyled components">
           <p class="myHeader">Hey</p>
-          <li class="active">
-            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
-              ><font-awesome-icon :icon="['fas', 'home']" />
-              <span class="ml-3">Accueil</span></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><font-awesome-icon :icon="['fas', 'smile-beam']" /><span
-                class="ml-3"
-                >Statisfaction</span
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-              ><font-awesome-icon :icon="['fas', 'file-alt']" /><span
-                class="ml-3"
-                >Documentation</span
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><font-awesome-icon :icon="['fas', 'question']" /><span
-                class="ml-3"
-                >Préoccupation</span
-              ></a
-            >
-          </li>
-          <li>
-            <a href="#"
-              ><font-awesome-icon :icon="['fas', 'lightbulb']" /><span
-                class="ml-3"
-                >Suggestions</span
-              ></a
-            >
-          </li>
+          <ListItems url="/menu" link="menu" iIcon="home" iText="Acceuil" />
+          <ListItems
+            url="/rating"
+            link="rating"
+            iIcon="smile-beam"
+            iText="Statisfaction"
+          />
+          <ListItems
+            url="/docs"
+            link="docs"
+            iIcon="file-alt"
+            iText="Documents"
+          />
+          <ListItems
+            url="/preoccupation"
+            link="preoccupation"
+            iIcon="question"
+            iText="Préoccupation"
+          />
+          <ListItems
+            url="/suggestions"
+            link="suggestions"
+            iIcon="lightbulb"
+            iText="Suggestions"
+          />
         </ul>
       </nav>
 
       <div id="content">
         <TheNavbar :connected="true" />
         <div class="container-fluid ">
-          <!-- <div v-if="longtime"> -->
-          <!-- <div class="row">
-            <div class="col text-center my-5">
-              <p class="display-4">
-                Bonjour Mr Adon Patrick,
-              </p>
-              <p class="lead">bienvenue dans Feedback Customer</p>
-            </div>
-          </div> -->
-          <!-- </div> -->
-          <!-- <Menu /> -->
           <!-- <TheFirstProfile /> -->
-          <Profile />
+          <router-view></router-view>
           <!-- <RatingPage /> -->
-          <!-- <div class="row align-self-center align-items-center">
-            <div class="col-4 shadow-sm compo">Faire des suggestions</div>
-            <div class="col-4 shadow-sm compo">
-              Soumettre votre préoccupation
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -87,7 +57,9 @@ import TheNavbar from "../components/TheNavbar";
 import Menu from "../components/Menu";
 import TheFirstProfile from "../components/TheFirstProfile";
 import Profile from "../components/Profile";
-import RatingPage from "../components/RatingPage";
+import RatingPage from "./RatingPage";
+import ListItems from "../components/ListItems";
+
 export default {
   name: "UserPage",
   components: {
@@ -96,25 +68,12 @@ export default {
     TheFirstProfile,
     Profile,
     RatingPage,
+    ListItems,
   },
-  // data() {
-  //   return {
-
-  //   };
-  // },
 };
 </script>
 
 <style lang="css" scoped>
-/* .compo {
-  margin: 10px;
-  padding: 10px;
-  border: none;
-  background-color: #fff;
-  border-radius: 3px;
-  color: black;
-} */
-
 body {
   /* font-family: "Poppins", sans-serif; */
   background: #fafafa;
@@ -176,41 +135,6 @@ a:focus {
   padding: 20px;
   background: #6d7fcc;
 } */
-
-#sidebar ul.components {
-  padding: 20px 0;
-}
-
-#sidebar ul p {
-  color: black;
-  padding: 10px;
-}
-
-#sidebar ul li a {
-  margin: 20px;
-  padding: 10px;
-  font-size: 1em;
-  display: block;
-  color: #646369;
-}
-
-#sidebar ul li a:hover {
-  color: #06f;
-  background: #fff;
-  background-color: #c4dafb;
-  border-radius: 5px;
-}
-
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-  color: #06f;
-  background: #c4dafb;
-  border-radius: 5px;
-}
-
-a[data-toggle="collapse"] {
-  position: relative;
-}
 
 ul ul a {
   font-size: 0.9em !important;

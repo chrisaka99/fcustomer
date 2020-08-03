@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import RatingCard from "./RatingCard";
+import RatingCard from "../components/RatingCard";
 export default {
   name: "RatingPage",
   components: {

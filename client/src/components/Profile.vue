@@ -9,10 +9,18 @@
           <div class="row">
             <div class="col-md-3 col-sm-12 text-sm-center text-md-center">
               <b-avatar text="JD" fluid size="10rem"></b-avatar>
-              <div class="row">
-                <div class="col text-center m-5">
+              <div class="row mt-2 d-flex flex-column">
+                <b-button variant="light" @click="switchEdit">
                   <font-awesome-icon :icon="['fas', 'edit']" /> Modifier
-                </div>
+                </b-button>
+                <b-button
+                  v-show="!disabled"
+                  variant="success"
+                  v-on:click="switchEdit"
+                  class="mt-2"
+                >
+                  <font-awesome-icon :icon="['fas', 'save']" /> Sauvegarder
+                </b-button>
               </div>
             </div>
 
@@ -24,7 +32,7 @@
                     id="identif"
                     placeholder="Jane Doe"
                     v-model="identifiant"
-                    readonly
+                    :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
 
@@ -34,17 +42,17 @@
                     type="email"
                     placeholder="JaneDoe@gmail.com"
                     v-model="email"
-                    readonly
+                    :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="Mot de passe" label-for="mdp">
                   <b-form-input
                     id="mdp"
-                    placeholder="Jane Doe"
+                    placeholder="********************"
                     name="mdp"
                     v-model="mdp"
-                    readonly
+                    :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
                 <hr />
@@ -55,8 +63,8 @@
                   <b-form-input
                     id="nom"
                     v-model="nom"
-                    placeholder="Jane"
-                    readonly
+                    placeholder="Doe"
+                    :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
 
@@ -65,7 +73,7 @@
                     id="prenoms"
                     placeholder="Jane"
                     v-model="prenoms"
-                    readonly
+                    :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
 
@@ -77,7 +85,7 @@
                     id="dateNais-etu"
                     v-model="dateNais"
                     class="mb-2"
-                    disabled
+                    :readonly="disabled"
                   ></b-form-datepicker>
                 </b-form-group>
               </b-form>
@@ -101,7 +109,13 @@ export default {
       mdp: "",
       prenoms: "",
       dateNais: "",
+      disabled: true,
     };
+  },
+  methods: {
+    switchEdit() {
+      this.disabled = !this.disabled;
+    },
   },
   computed: {},
 };

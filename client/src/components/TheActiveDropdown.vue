@@ -1,26 +1,13 @@
 <template>
-  <div
-    class="nav-link dropdown-toggle"
-    id="navbarDropdownMenuLink"
-    role="button"
-    data-toggle="dropdown"
-    aria-haspopup="true"
-    aria-expanded="false"
-  >
-    <img
-      style="height: 40px;"
-      src="https://ui-avatars.com/api/?background=0D8ABC&color=fff"
-      class="rounded-circle img-fluid"
-    />
-    <span class="ml-2">Adon Patrick</span>
-    <div
-      class="dropdown-menu"
-      id="dropdMenu"
-      aria-labelledby="navbarDropdownMenuLink"
-    >
-      <a class="dropdown-item" id="edit" href="#">Modifier mon profil</a>
-      <a class="dropdown-item" id="logout" href="#">Se deconnecter</a>
-    </div>
+  <div>
+    <b-dropdown variant="text" toggle-class="text-decoration-none">
+      <template v-slot:button-content>
+        <b-avatar text="JD" fluid size="3rem"></b-avatar
+        ><span class="ml-2">Adon Patrick</span>
+      </template>
+      <b-dropdown-item to="/profil">Profil</b-dropdown-item>
+      <b-dropdown-item variant="danger" to="/">Se deconnecter</b-dropdown-item>
+    </b-dropdown>
   </div>
 </template>
 
@@ -29,21 +16,3 @@ export default {
   name: "TheActiveDropdown",
 };
 </script>
-
-<style lang="css">
-#dropdMenu {
-  z-index: 999;
-}
-#edit:hover {
-  background-color: rgb(180, 180, 180);
-}
-
-#logout {
-  color: red;
-}
-
-#logout:hover {
-  background-color: rgb(238, 94, 94);
-  color: #fff;
-}
-</style>
