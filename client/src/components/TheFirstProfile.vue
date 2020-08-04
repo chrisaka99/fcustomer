@@ -81,6 +81,16 @@
                   ></b-form-input>
                 </b-form-group>
 
+                <b-form-group label="Adresse" label-for="adresse-cli">
+                  <b-form-input
+                    id="adresse-cli"
+                    autocomplete="off"
+                    type="text"
+                    v-model="form1.adresseCli"
+                    required
+                  ></b-form-input>
+                </b-form-group>
+
                 <div class="form-group">
                   <button type="submit" tag="button" class="button btn-block">
                     Valider
@@ -241,13 +251,14 @@ export default {
     return {
       selected: [],
       options: [
-        { text: "Masculin", value: "masculin" },
-        { text: "Feminin", value: "feminin" },
+        { text: "Masculin", value: "M" },
+        { text: "Feminin", value: "F" },
       ],
       status: "",
       form1: {
         emailSociete: "",
         nomSociete: "",
+        adresseCli: "",
       },
       form2: {
         email: "",
