@@ -20,6 +20,7 @@ router.post("/login", function (req, res, next) {
       }
 
       if (!result.length) {
+        // console.log("ERR");
         return res.status(401).send({
           msg: "Identifiant ou Mot de passe incorrect",
         });
@@ -39,14 +40,23 @@ router.post("/login", function (req, res, next) {
             {
               user_id: result[0].user_id,
               mdp: result[0].mdp,
+              email: result[0].email,
+              inscrit: result[0].inscrit,
+              statut: result[0].statut,
+              nom: result[0].nom,
+              prenoms: result[0].prenoms,
+              dateNais: result[0].dateNais,
+              sexe: result[0].sexe,
+              matiere: result[0].matiere,
+              promotion: result[0].promotion,
             },
             "MEINSEKRET",
-            { expiresIn: "1d" }
+            { expiresIn: "1h" }
           );
 
-          db.query("UPDATE user SET last_login = now() WHERE user_id = ?", [
-            result.user_id,
-          ]);
+          // db.query("UPDATE user SET last_login = now() WHERE user_id = ?", [
+          //   result.user_id,
+          // ]);
 
           return res.status(200).send({
             msg: "Utilisateur connecté",
@@ -64,7 +74,7 @@ router.post("/login", function (req, res, next) {
 });
 
 router.post("/register", validateRegister, function (req, res, next) {
-  //? ON VERIFIE D'ABORD SI L'INDENTIFIANT EXISTE DANS LA DATABASE
+  //? ON VERIFIE D'ABORD SI L'IDENTIFIANT EXISTE DANS LA DATABASE
   db.query(
     "SELECT * FROM user WHERE LOWER(user_id) = LOWER(?);",
     [req.body.user_id],
@@ -81,21 +91,83 @@ router.post("/register", validateRegister, function (req, res, next) {
               msg: err,
             });
           } else {
-            db.query(
-              "INSERT INTO user(user_id, mdp, email, inscrit) VALUES (?,?,?,now());",
-              [req.body.user_id, hash, req.body.email],
-              (err, result) => {
-                if (err) {
-                  // throw err;
-                  return res.status(400).send({
-                    msg: err,
+            if (req.body.statut === "client") {
+              db.query(
+                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, matiere, promotion) VALUES (?,?,?,now(),?,?, NULL, NULL, NULL, NULL,NULL);",
+                [
+                  req.body.user_id,
+                  hash,
+                  req.body.email,
+                  req.body.statut,
+                  req.body.nom,
+                ],
+                (err, result) => {
+                  if (err) {
+                    console.log(result);
+                    // throw err;
+                    return res.status(400).send({
+                      msg: err,
+                    });
+                  }
+                  return res.status(201).send({
+                    msg: "Client créé!",
                   });
                 }
-                return res.status(201).send({
-                  msg: "Utilisateur créé!",
-                });
-              }
-            );
+              );
+            } else if (req.body.statut === "etudiant") {
+              db.query(
+                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, matiere, promotion) VALUES (?,?,?,now(),?,?,?,?,?,NULL,?);",
+                [
+                  req.body.user_id,
+                  hash,
+                  req.body.email,
+                  req.body.statut,
+                  req.body.nom,
+                  req.body.prenoms,
+                  req.body.dateNais,
+                  req.body.sexe,
+                  req.body.promotion,
+                ],
+                (err, result) => {
+                  console.log(result);
+                  if (err) {
+                    // throw err;
+                    return res.status(400).send({
+                      msg: err,
+                    });
+                  }
+                  return res.status(201).send({
+                    msg: "Etudiant créé!",
+                  });
+                }
+              );
+            } else if (req.body.statut === "enseignant") {
+              db.query(
+                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, matiere, promotion) VALUES (?,?,?,now(),?,?,?,NULL,?,?,NULL);",
+                [
+                  req.body.user_id,
+                  hash,
+                  req.body.email,
+                  req.body.statut,
+                  req.body.nom,
+                  req.body.prenoms,
+                  req.body.sexe,
+                  req.body.matiere,
+                ],
+                (err, result) => {
+                  console.log(result);
+                  if (err) {
+                    // throw err;
+                    return res.status(400).send({
+                      msg: err,
+                    });
+                  }
+                  return res.status(201).send({
+                    msg: "Enseignant créé!",
+                  });
+                }
+              );
+            }
           }
         });
       }
@@ -103,7 +175,7 @@ router.post("/register", validateRegister, function (req, res, next) {
   );
 });
 
-router.post("/secret-route", isLoggedIn, function (req, res, next) {
+router.get("/secret-route", isLoggedIn, function (req, res, next) {
   console.log(req.userData);
   res.send("This is the secret content. Only logged in users can see that!");
 });

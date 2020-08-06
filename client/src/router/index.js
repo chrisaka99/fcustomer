@@ -63,6 +63,10 @@ const routes = [
         path: "/preoccupation",
         component: Preoccupation,
       },
+      {
+        path: "/first",
+        component: TheFirstProfile,
+      },
     ],
   },
 ];
