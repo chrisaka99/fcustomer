@@ -1,67 +1,54 @@
 <template>
-  <div class="cmargin">
-    <div class="container">
-      <div class="row">
-        <div
-          class="col-sm-12 offset-sm-0 col-md-6 offset-md-0 text-center align-self-center"
-        >
-          <img
-            src="../assets/sign_in.svg"
-            class="img-fluid"
-            height="400"
-            width="400"
-          />
+  <div class="container-fluid">
+    <div class="row" id="row-layer">
+      <div class="a col-md-6">__A</div>
+      <div class="b col-md-6">
+        <div class="row">
+          <h3 class="lead mx-auto my-5 title">Connexion</h3>
         </div>
-        <div class="col-sm-12 col-md-4 offset-md-1 half-part">
-          <div class="row">
-            <h3 class="lead title">Connexion</h3>
-          </div>
-          <div class="row">
-            <div class="col typing-part">
-              <form
-                @submit.prevent="submitForm"
-                action="/something"
-                method="post"
-              >
-                <div class="form-group">
-                  <label for="identif">Identifiant</label>
-                  <b-form-input
-                    id="identif"
-                    type="text"
-                    autocomplete="off"
-                    v-model="form.identifiant"
-                    required
-                  ></b-form-input>
-                </div>
-                <div class="form-group">
-                  <label for="mdp">Mot de passe</label>
-                  <b-form-input
-                    id="mdp"
-                    type="password"
-                    v-model="form.mdp"
-                    required
-                  ></b-form-input>
-                </div>
+        <div class="row">
+          <div class="col-md-10 mx-auto">
+            <form v-on:submit.prevent="login" method="POST">
+              <div class="form-group">
+                <label for="identif">Identifiant</label>
+                <b-form-input
+                  id="identif"
+                  type="text"
+                  autocomplete="off"
+                  v-model="user_id"
+                  required
+                ></b-form-input>
+              </div>
+              <div class="form-group">
+                <label for="mdp">Mot de passe</label>
+                <b-form-input
+                  id="mdp"
+                  type="password"
+                  v-model="mdp"
+                  required
+                ></b-form-input>
+              </div>
 
-                <div class="form-group">
-                  <router-link to="/password-forgotten"
-                    >Mot de passe oublié ?</router-link
-                  >
-                </div>
-                <div class="form-group">
-                  <button type="submit" tag="button" class="button btn-block">
-                    Se connecter
-                  </button>
-                </div>
+              <p v-if="msg">{{ msg }}</p>
 
-                <div class="form-group">
-                  <p>
-                    Vous n'avez pas de compte ?
-                    <router-link to="/inscription">Inscrivez-vous</router-link>
-                  </p>
-                </div>
-              </form>
-            </div>
+              <div class="form-group">
+                <router-link to="/password-forgotten"
+                  >Mot de passe oublié ?</router-link
+                >
+              </div>
+              <div class="form-group">
+                <button type="submit" tag="button" class="button btn-block">
+                  Se connecter
+                </button>
+              </div>
+
+              <div class="form-group">
+                <p>
+                  Vous n'avez pas de compte ?
+                  <router-link to="/inscription">Inscrivez-vous</router-link>
+                </p>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -70,29 +57,54 @@
 </template>
 
 <script>
-// import TheInput from "../components/TheInput";
+import axios from "axios";
 export default {
-  name: "LoginPage",
-  components: {
-    // TheInput,
-  },
+  name: "Login",
   data() {
     return {
-      form: {
-        identifiant: "",
-        mdp: "",
-      },
+      user_id: "",
+      mdp: "",
+      msg: "",
     };
   },
   methods: {
-    submitForm: function() {
-      alert(JSON.stringify(this.form));
+    async login() {
+      const credentials = {
+        user_id: this.user_id,
+        mdp: this.mdp,
+      };
+
+      await axios
+        .post("http://localhost:3000/api/login", credentials)
+        .then((res) => {
+          this.msg = res.data.msg;
+          localStorage.setItem("token", res.data.token);
+          this.$router.push("/user");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="css" scoped>
+.a {
+  background: url("../assets/startup-593327_1920.jpg") no-repeat center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#row-layer {
+  min-height: 100vh;
+}
+.title {
+  font-size: 50px;
+  letter-spacing: 2;
+  font-weight: bold;
+}
 .cmargin {
   margin: 40px !important;
 }
@@ -131,10 +143,4 @@ img {
   color: white;
   background-color: red;
 }
-/* 
-.button:active {
-  background-color: #fff;
-  border: 1px solid #348def;
-  color: #348def;
-} */
 </style>

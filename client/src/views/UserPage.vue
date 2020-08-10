@@ -55,20 +55,42 @@
 <script>
 import TheNavbar from "../components/TheNavbar";
 import Menu from "../components/Menu";
-import TheFirstProfile from "../components/TheFirstProfile";
 import Profile from "../components/Profile";
 import RatingPage from "./RatingPage";
 import ListItems from "../components/ListItems";
+import axios from "axios";
 
 export default {
   name: "UserPage",
   components: {
     TheNavbar,
     Menu,
-    TheFirstProfile,
     Profile,
     RatingPage,
     ListItems,
+  },
+  data() {
+    return {
+      token: "",
+      user: "",
+    };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/api/user", {
+        headers: { token: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        this.user = res.data;
+      })
+      .catch((err) => console.log(err));
+  },
+  created() {
+    if (localStorage.getItem("token") === null) {
+      this.$router.push("/connexion");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
   },
 };
 </script>

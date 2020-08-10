@@ -8,7 +8,7 @@
         <div class="col-md-12 p-5 bg-white">
           <div class="row">
             <div class="col-md-3 col-sm-12 text-sm-center text-md-center">
-              <b-avatar text="JD" fluid size="10rem"></b-avatar>
+              <b-avatar :text="getInitials" fluid size="10rem"></b-avatar>
               <div class="row mt-2 d-flex flex-column">
                 <b-button variant="light" @click="switchEdit">
                   <font-awesome-icon :icon="['fas', 'edit']" /> Modifier
@@ -30,8 +30,7 @@
                 <b-form-group label="Identifiant" label-for="identif">
                   <b-form-input
                     id="identif"
-                    placeholder="Jane Doe"
-                    v-model="identifiant"
+                    v-model="user.user_id"
                     :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
@@ -40,8 +39,7 @@
                   <b-form-input
                     id="email"
                     type="email"
-                    placeholder="JaneDoe@gmail.com"
-                    v-model="email"
+                    v-model="user.email"
                     :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
@@ -49,9 +47,8 @@
                 <b-form-group label="Mot de passe" label-for="mdp">
                   <b-form-input
                     id="mdp"
-                    placeholder="********************"
                     name="mdp"
-                    v-model="mdp"
+                    v-model="user.mdp"
                     :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
@@ -62,8 +59,7 @@
                 <b-form-group label="Nom" label-for="nom">
                   <b-form-input
                     id="nom"
-                    v-model="nom"
-                    placeholder="Doe"
+                    v-model="user.nom"
                     :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
@@ -71,8 +67,7 @@
                 <b-form-group label="Prénoms" label-for="prenoms">
                   <b-form-input
                     id="prenoms"
-                    placeholder="Jane"
-                    v-model="prenoms"
+                    v-model="user.prenom"
                     :readonly="disabled"
                   ></b-form-input>
                 </b-form-group>
@@ -83,7 +78,7 @@
                 >
                   <b-form-datepicker
                     id="dateNais-etu"
-                    v-model="dateNais"
+                    v-model="user.dateNais"
                     class="mb-2"
                     :readonly="disabled"
                   ></b-form-datepicker>
@@ -98,26 +93,43 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "TheFirstProfile",
+  name: "Profile",
   data() {
     return {
-      status: "etudiant",
-      identifiant: "",
-      email: "",
-      nom: "",
-      mdp: "",
-      prenoms: "",
-      dateNais: "",
-      disabled: true,
+      token: "",
+      user: "",
     };
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/api/user", {
+        headers: { token: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        this.user = res.data;
+      })
+      .catch((error) => console.log(error));
+  },
+  created() {
+    if (localStorage.getItem("token") === null) {
+      this.$router.push("/connexion");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
   },
   methods: {
     switchEdit() {
       this.disabled = !this.disabled;
     },
   },
-  computed: {},
+  computed: {
+    getInitials() {
+      if (this.user.prenom === null) return this.user.nom.charAt(0);
+      return this.user.nom.charAt(0) + this.user.prenom.charAt(0);
+    },
+  },
 };
 </script>
 

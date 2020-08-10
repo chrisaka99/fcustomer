@@ -4,11 +4,11 @@ import VueRouter from "vue-router";
 import LoginPage from "../views/LoginPage.vue";
 import UserPage from "../views/UserPage.vue";
 import Menu from "../components/Menu.vue";
-import TheFirstProfile from "../components/TheFirstProfile.vue";
 import Profile from "../components/Profile.vue";
 import RatingPage from "../views/RatingPage.vue";
 import Suggestion from "../components/Suggestions.vue";
 import Preoccupation from "../components/Preoccupation.vue";
+import Register from "../views/Register.vue";
 
 Vue.use(VueRouter);
 
@@ -24,28 +24,17 @@ const routes = [
   },
   {
     path: "/inscription",
-    name: "RegisterPage",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/RegisterPage.vue"),
+    name: "Register",
+    component: Register,
   },
   {
     path: "/user",
     name: "UserPage",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: UserPage,
     children: [
       {
         path: "/menu",
         component: Menu,
-      },
-      {
-        path: "/profile-setup",
-        component: TheFirstProfile,
       },
       {
         path: "/profil",
@@ -62,10 +51,6 @@ const routes = [
       {
         path: "/preoccupation",
         component: Preoccupation,
-      },
-      {
-        path: "/first",
-        component: TheFirstProfile,
       },
     ],
   },

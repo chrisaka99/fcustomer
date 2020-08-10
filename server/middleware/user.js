@@ -4,19 +4,19 @@ module.exports = {
   validateRegister: (req, res, next) => {
     body = req.body;
     if (!body.user_id || body.user_id.length < 5) {
-      res.status(400).send({
+      res.send({
         msg: "Veuillez entrez au moins 6 caractères",
       });
     }
 
     if (!body.mdp || body.mdp.length < 5) {
-      res.status(400).send({
+      res.send({
         msg: "Le mot de passe doit avoir au moins 6 caractères",
       });
     }
 
     if (!body.mdp || body.mdp !== body.remdp) {
-      res.status(400).send({
+      res.send({
         msg: "Les mots de passes doivent concorder",
       });
     }

@@ -14,27 +14,27 @@ router.post("/login", function (req, res, next) {
     (error, result) => {
       if (error) {
         // throw error;
-        return res.status(400).send({
+        return res.send({
           msg: error,
         });
       }
 
       if (!result.length) {
         // console.log("ERR");
-        return res.status(401).send({
+        return res.send({
           msg: "Identifiant ou Mot de passe incorrect",
         });
       }
 
-      console.log(req.body.mdp);
+      // console.log(req.body.mdp);
       bcrypt.compare(req.body.mdp, result[0].mdp, (bError, bResult) => {
         if (bError) {
           // throw bError;
-          return res.status(401).send({
+          return res.send({
             msg: bError,
           });
         }
-        console.log(bResult);
+        // console.log(bResult);
         if (bResult) {
           const token = jwt.sign(
             {
@@ -57,15 +57,14 @@ router.post("/login", function (req, res, next) {
           // db.query("UPDATE user SET last_login = now() WHERE user_id = ?", [
           //   result.user_id,
           // ]);
-
-          return res.status(200).send({
+          return res.send({
             msg: "Utilisateur connecté",
             token,
             user: result[0],
           });
         }
 
-        return res.status(401).send({
+        return res.send({
           msg: "L'identifiant ou le Mot de passe est incorrect",
         });
       });
@@ -80,14 +79,14 @@ router.post("/register", validateRegister, function (req, res, next) {
     [req.body.user_id],
     (error, result) => {
       if (result.length) {
-        return res.status(409).send({
+        return res.send({
           msg: "L'identifiant existe déjà.",
         });
       } else {
         //? ALORS ON ENREGISTRE UN NOUVEL UTILISATEUR
         bcrypt.hash(req.body.mdp, 10, (err, hash) => {
           if (err) {
-            return res.status(500).send({
+            return res.send({
               msg: err,
             });
           } else {
@@ -103,13 +102,13 @@ router.post("/register", validateRegister, function (req, res, next) {
                 ],
                 (err, result) => {
                   if (err) {
-                    console.log(result);
+                    // console.log(result);
                     // throw err;
-                    return res.status(400).send({
+                    return res.send({
                       msg: err,
                     });
                   }
-                  return res.status(201).send({
+                  return res.send({
                     msg: "Client créé!",
                   });
                 }
@@ -129,14 +128,14 @@ router.post("/register", validateRegister, function (req, res, next) {
                   req.body.promotion,
                 ],
                 (err, result) => {
-                  console.log(result);
+                  // console.log(result);
                   if (err) {
                     // throw err;
-                    return res.status(400).send({
+                    return res.send({
                       msg: err,
                     });
                   }
-                  return res.status(201).send({
+                  return res.send({
                     msg: "Etudiant créé!",
                   });
                 }
@@ -155,14 +154,14 @@ router.post("/register", validateRegister, function (req, res, next) {
                   req.body.matiere,
                 ],
                 (err, result) => {
-                  console.log(result);
+                  // console.log(result);
                   if (err) {
                     // throw err;
-                    return res.status(400).send({
+                    return res.send({
                       msg: err,
                     });
                   }
-                  return res.status(201).send({
+                  return res.send({
                     msg: "Enseignant créé!",
                   });
                 }
@@ -175,8 +174,34 @@ router.post("/register", validateRegister, function (req, res, next) {
   );
 });
 
+router.get("/user", (req, res, next) => {
+  let token = req.headers.token;
+  jwt.verify(token, "MEINSEKRET", (err, decode) => {
+    // console.log(decode);
+    if (err) {
+      return res.json({
+        title: "Non autorisé",
+      });
+    }
+    return res.json({
+      user_id: decode.user_id,
+      mdp: decode.mdp,
+      nom: decode.nom,
+      remdp: decode.remdp,
+      email: decode.email,
+      statut: decode.statut,
+      prenom: decode.prenoms,
+      dateNais: decode.dateNais,
+      sexe: decode.sexe,
+      matiere: decode.matiere,
+      promotion: decode.promotion,
+    });
+    console.log(decode.nom);
+  });
+});
+
 router.get("/secret-route", isLoggedIn, function (req, res, next) {
-  console.log(req.userData);
+  // console.log(req.userData);
   res.send("This is the secret content. Only logged in users can see that!");
 });
 
