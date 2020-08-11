@@ -16,8 +16,6 @@ import NotFound from "../views/NotFound.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  { path: "/404", component: NotFound },
-  { path: "*", redirect: "/404" },
   {
     path: "/",
     redirect: "/connexion",
@@ -72,6 +70,8 @@ const routes = [
     path: "/dashboard",
     component: Dashboard,
   },
+  { path: "/404", component: NotFound },
+  { path: "*", redirect: "/404" },
 ];
 
 const router = new VueRouter({

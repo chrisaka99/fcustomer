@@ -7,7 +7,10 @@
         </div>
         <div class="row">
           <div class="col-md-7 mx-auto my-auto">
-            <form v-on:submit.prevent="submit" method="POST">
+            <form v-on:submit.prevent="submit" method="POST" novalidate>
+              <p v-if="msg" class="text-center">
+                <b-alert show variant="danger">{{ msg }}</b-alert>
+              </p>
               <div class="form-group">
                 <label for="identif">Identifiant</label>
                 <b-form-input
@@ -27,8 +30,7 @@
                   required
                 ></b-form-input>
               </div>
-              <p style="color: red;">{{ msg }}</p>
-              <!-- <p v-if="msg">{{ msg }}</p> -->
+
               <div class="form-group">
                 <button type="submit" tag="button" class="button btn-block">
                   Se connecter
@@ -64,9 +66,9 @@ export default {
         .post("http://localhost:3000/api/loginAdmin", credentials)
         .then((res) => {
           if (res.status === 200) {
-            console.log(res);
+            console.log(res.data);
             localStorage.setItem("tokenAdmin", res.data.tokenAdmin);
-            this.$router.push("/dashboard");
+            // this.$router.push("/dashboard");
           }
         })
         .catch((err) => {
@@ -76,12 +78,14 @@ export default {
     },
   },
   created() {
-    if (
-      localStorage.getItem("tokenAdmin") !== null ||
-      localStorage.getItem("tokenAdmin") !== undefined
-    ) {
-      this.$router.push("/dashboard");
-    }
+    // if (
+    //   localStorage.getItem("tokenAdmin") !== null ||
+    //   localStorage.getItem("tokenAdmin") !== undefined
+    // ) {
+    //   this.$router.push("/dashboard");
+    // } else {
+    //   this.tokenAdmin = localStorage.getItem("tokenAdmin");
+    // }
   },
 };
 </script>

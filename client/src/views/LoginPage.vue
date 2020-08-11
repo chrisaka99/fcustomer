@@ -91,12 +91,12 @@ export default {
     },
   },
   created() {
-    if (
-      localStorage.getItem("token") !== null ||
-      localStorage.getItem("token") !== undefined
-    ) {
-      this.$router.push("/user");
-    }
+    // if (
+    //   localStorage.getItem("token") !== null ||
+    //   localStorage.getItem("token") !== undefined
+    // ) {
+    //   this.$router.push("/user");
+    // }
   },
 };
 </script>
