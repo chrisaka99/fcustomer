@@ -6,7 +6,8 @@ const jwt = require("jsonwebtoken");
 const db = require("../db/mysql");
 const { validateRegister, isLoggedIn } = require("../middleware/user");
 
-/* GET home page. */
+//?::::::::::::::::::::::::::::::::::::: USER ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
+
 router.post("/login", function (req, res, next) {
   db.query(
     "SELECT * FROM user WHERE user_id = ?;",
@@ -21,7 +22,7 @@ router.post("/login", function (req, res, next) {
 
       if (!result.length) {
         // console.log("ERR");
-        return res.send({
+        return res.status(401).send({
           msg: "Identifiant ou Mot de passe incorrect",
         });
       }
@@ -57,14 +58,14 @@ router.post("/login", function (req, res, next) {
           // db.query("UPDATE user SET last_login = now() WHERE user_id = ?", [
           //   result.user_id,
           // ]);
-          return res.send({
+          return res.status(200).send({
             msg: "Utilisateur connecté",
             token,
             user: result[0],
           });
         }
 
-        return res.send({
+        return res.status(401).send({
           msg: "L'identifiant ou le Mot de passe est incorrect",
         });
       });
@@ -206,6 +207,8 @@ router.get("/secret-route", isLoggedIn, function (req, res, next) {
   res.send("This is the secret content. Only logged in users can see that!");
 });
 
+//?::::::::::::::::::::::::::::::::::::: FONCTIONNALITY ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
+
 router.post("/preoccupation", (req, res, next) => {
   // console.log(req.body);
   db.query(
@@ -248,6 +251,121 @@ router.post("/suggestions", (req, res, next) => {
       }
     }
   );
+});
+
+//?::::::::::::::::::::::::::::::::::::: ADMIN ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
+
+router.post("/addAdmin", (req, res, next) => {
+  db.query(
+    "SELECT * FROM admin WHERE LOWER(admin_id) = LOWER(?);",
+    [req.body.admin_id],
+    (error, result) => {
+      if (result.length) {
+        return res.send({
+          msg: "L'identifiant existe déjà.",
+        });
+      } else {
+        //? ALORS ON ENREGISTRE UN NOUVEL ADMIN
+        bcrypt.hash(req.body.mdp, 10, (err, hash) => {
+          if (err) {
+            return res.send({
+              msg: err,
+            });
+          } else {
+            db.query(
+              "INSERT INTO admin(admin_id, mdp) VALUES (?,?);",
+              [req.body.admin_id, hash],
+              (err, result) => {
+                if (err) {
+                  // console.log(result);
+                  // throw err;
+                  return res.send({
+                    msg: err,
+                  });
+                }
+                return res.send({
+                  msg: "Admin créé!",
+                });
+              }
+            );
+          }
+        });
+      }
+    }
+  );
+});
+
+router.post("/loginAdmin", function (req, res, next) {
+  db.query(
+    "SELECT * FROM admin WHERE admin_id = ?;",
+    [req.body.admin_id],
+    (error, result) => {
+      if (error) {
+        // throw error;
+        return res.send({
+          msg: error,
+        });
+      }
+
+      if (!result.length) {
+        // console.log("ERR");
+        return res.status(401).send({
+          msg: "Identifiant ou Mot de passe incorrect",
+        });
+      }
+
+      // console.log(req.body.mdp);
+      bcrypt.compare(req.body.mdp, result[0].mdp, (bError, bResult) => {
+        if (bError) {
+          // throw bError;
+          return res.send({
+            msg: bError,
+          });
+        }
+
+        if (bResult) {
+          const tokenAdmin = jwt.sign(
+            {
+              admin_id: result[0].admin_id,
+              mdp: result[0].mdp,
+            },
+            "MEINSEKRET1",
+            { expiresIn: "7d" }
+          );
+
+          console.log(result[0]);
+          return res.status(200).send({
+            msg: "Admin connecté",
+            tokenAdmin,
+            user: result[0],
+          });
+        }
+
+        return res.status(401).send({
+          msg: "L'identifiant ou le Mot de passe est incorrect",
+        });
+      });
+    }
+  );
+});
+
+router.get("/admin", (req, res, next) => {
+  let tokenAdmin = req.headers.token;
+  console.log(tokenAdmin);
+  jwt.verify(tokenAdmin, "MEINSEKRET1", (err, decode) => {
+    // console.log(decode);
+    if (err) {
+      return res.json({
+        msg: "Non autorisé",
+      });
+    }
+    // console.log("okok");
+    return res.json({
+      msg: "Connecté",
+      admin_id: decode.admin_id,
+      mdp: decode.mdp,
+    });
+  });
 });
 
 module.exports = router;

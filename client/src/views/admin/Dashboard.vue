@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>{{ admin.admin_id }}</p>
+    <p><button @click="logout">Se deconnecter</button></p>
   </div>
 </template>
 
@@ -13,6 +14,13 @@ export default {
       admin: "",
       tokenAdmin: "",
     };
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push("/admin");
+      console.log("logged out!");
+    },
   },
   mounted() {
     // console.log(localStorage.getItem("tokenAdmin"));

@@ -68,7 +68,7 @@ export default {
           if (res.status === 200) {
             console.log(res.data);
             localStorage.setItem("tokenAdmin", res.data.tokenAdmin);
-            // this.$router.push("/dashboard");
+            this.$router.push("/dashboard");
           }
         })
         .catch((err) => {
