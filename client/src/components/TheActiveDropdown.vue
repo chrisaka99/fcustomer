@@ -2,7 +2,7 @@
   <div>
     <b-dropdown variant="text" toggle-class="text-decoration-none">
       <template v-slot:button-content>
-        <b-avatar :text="getInitials" fluid size="3rem"></b-avatar
+        <b-avatar text="JD" fluid size="3rem"></b-avatar
         ><span class="ml-2">{{ votreNom }}</span>
       </template>
       <b-dropdown-item to="/profil">Profil</b-dropdown-item>

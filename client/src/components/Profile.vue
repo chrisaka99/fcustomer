@@ -8,19 +8,54 @@
         <div class="col-md-12 p-5 bg-white">
           <div class="row">
             <div class="col-md-3 col-sm-12 text-sm-center text-md-center">
-              <b-avatar :text="getInitials" fluid size="10rem"></b-avatar>
-              <div class="row mt-2 d-flex flex-column">
-                <b-button variant="light" @click="switchEdit">
-                  <font-awesome-icon :icon="['fas', 'edit']" /> Modifier
-                </b-button>
+              <b-avatar text="JD" fluid size="10rem"></b-avatar>
+              <div class="row mt-3 d-flex flex-column">
                 <b-button
+                  variant="light"
+                  @click="$bvModal.show('bv-modal-example')"
+                >
+                  <font-awesome-icon :icon="['fas', 'edit']" /> Modifier le mot
+                  de passe
+                </b-button>
+                <b-modal id="bv-modal-example" hide-footer>
+                  <template v-slot:modal-title>
+                    Changer votre de passe
+                  </template>
+                  <div class="d-block text-center">
+                    <b-form-group label="Saisir mot de passe" label-for="mdp">
+                      <b-form-input
+                        id="mdp"
+                        name="mdp"
+                        v-model="mdp"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="Saisir à nouveau le mot de passe"
+                      label-for="remdp"
+                    >
+                      <b-form-input
+                        id="remdp"
+                        name="remdp"
+                        v-model="remdp"
+                      ></b-form-input>
+                    </b-form-group>
+                  </div>
+                  <b-button
+                    class="mt-3 btn-success"
+                    block
+                    @click="$bvModal.hide('bv-modal-example')"
+                    >Valider</b-button
+                  >
+                </b-modal>
+                <!-- <b-button
                   v-show="!disabled"
                   variant="success"
                   v-on:click="switchEdit"
                   class="mt-2"
                 >
                   <font-awesome-icon :icon="['fas', 'save']" /> Sauvegarder
-                </b-button>
+                </b-button> -->
               </div>
             </div>
 
@@ -31,7 +66,7 @@
                   <b-form-input
                     id="identif"
                     v-model="user.user_id"
-                    :readonly="disabled"
+                    readonly
                   ></b-form-input>
                 </b-form-group>
 
@@ -40,18 +75,18 @@
                     id="email"
                     type="email"
                     v-model="user.email"
-                    :readonly="disabled"
+                    readonly
                   ></b-form-input>
                 </b-form-group>
-
+                <!-- 
                 <b-form-group label="Mot de passe" label-for="mdp">
                   <b-form-input
                     id="mdp"
                     name="mdp"
                     v-model="user.mdp"
-                    :readonly="disabled"
+                    readonly
                   ></b-form-input>
-                </b-form-group>
+                </b-form-group> -->
                 <hr />
 
                 <h3>Informations personnelles</h3>
@@ -60,7 +95,7 @@
                   <b-form-input
                     id="nom"
                     v-model="user.nom"
-                    :readonly="disabled"
+                    readonly
                   ></b-form-input>
                 </b-form-group>
 
@@ -68,7 +103,7 @@
                   <b-form-input
                     id="prenoms"
                     v-model="user.prenom"
-                    :readonly="disabled"
+                    readonly
                   ></b-form-input>
                 </b-form-group>
 
@@ -80,7 +115,8 @@
                     id="dateNais-etu"
                     v-model="user.dateNais"
                     class="mb-2"
-                    :readonly="disabled"
+                    locale="fr"
+                    readonly
                   ></b-form-datepicker>
                 </b-form-group>
               </b-form>
@@ -100,6 +136,8 @@ export default {
     return {
       token: "",
       user: "",
+      mdp: "",
+      remdp: "",
     };
   },
   mounted() {
@@ -113,7 +151,10 @@ export default {
       .catch((error) => console.log(error));
   },
   created() {
-    if (localStorage.getItem("token") === null) {
+    if (
+      localStorage.getItem("token") === null ||
+      localStorage.getItem("token") === undefined
+    ) {
       this.$router.push("/connexion");
     } else {
       this.token = localStorage.getItem("token");

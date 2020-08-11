@@ -51,7 +51,7 @@ router.post("/login", function (req, res, next) {
               promotion: result[0].promotion,
             },
             "MEINSEKRET",
-            { expiresIn: "1h" }
+            { expiresIn: "7d" }
           );
 
           // db.query("UPDATE user SET last_login = now() WHERE user_id = ?", [
@@ -184,6 +184,7 @@ router.get("/user", (req, res, next) => {
       });
     }
     return res.json({
+      id: decode.id,
       user_id: decode.user_id,
       mdp: decode.mdp,
       nom: decode.nom,
@@ -203,6 +204,50 @@ router.get("/user", (req, res, next) => {
 router.get("/secret-route", isLoggedIn, function (req, res, next) {
   // console.log(req.userData);
   res.send("This is the secret content. Only logged in users can see that!");
+});
+
+router.post("/preoccupation", (req, res, next) => {
+  // console.log(req.body);
+  db.query(
+    "SELECT id FROM user WHERE user_id = ?",
+    [req.body.user_id],
+    (err, result) => {
+      if (err) return res.json({ msg: "Erreur de soumission" });
+      if (result) {
+        // console.log(result[0].id);
+        db.query(
+          "INSERT INTO preoccupation(service, text, id_user) VALUES(?,?,?)",
+          [req.body.service, req.body.text, result[0].id],
+          (err, result1) => {
+            if (err) return res.json({ msg: "Erreur de soumission" });
+            if (result1) return res.json({ msg: "Préoccupation soumise !" });
+          }
+        );
+      }
+    }
+  );
+});
+
+router.post("/suggestions", (req, res, next) => {
+  console.log(req.body);
+  db.query(
+    "SELECT id FROM user WHERE user_id = ?",
+    [req.body.user_id],
+    (err, result) => {
+      if (err) return res.json({ msg: "Erreur de soumission" });
+      if (result) {
+        // console.log(result);
+        db.query(
+          "INSERT INTO suggestions(service, text, id_user) VALUES(?,?,?)",
+          [req.body.service, req.body.text, result[0].id],
+          (err, result1) => {
+            if (err) return res.json({ msg: "Erreur de soumission" });
+            if (result1) return res.json({ msg: "Suggestion soumise !" });
+          }
+        );
+      }
+    }
+  );
 });
 
 module.exports = router;

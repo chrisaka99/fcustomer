@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row" id="row-layer">
-      <div class="a col-md-6">__A</div>
+      <div class="a col-md-6"></div>
       <div class="b col-md-6">
         <div class="row">
           <h3 class="lead mx-auto my-5 title">Connexion</h3>

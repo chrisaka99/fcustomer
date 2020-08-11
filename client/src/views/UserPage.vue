@@ -90,6 +90,7 @@ export default {
       this.$router.push("/connexion");
     } else {
       this.token = localStorage.getItem("token");
+      this.$router.push("/menu");
     }
   },
 };
