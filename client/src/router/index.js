@@ -9,10 +9,15 @@ import RatingPage from "../views/RatingPage.vue";
 import Suggestion from "../components/Suggestions.vue";
 import Preoccupation from "../components/Preoccupation.vue";
 import Register from "../views/Register.vue";
+import AdminLogin from "../views/admin/AdminLogin.vue";
+import Dashboard from "../views/admin/Dashboard.vue";
+import NotFound from "../views/NotFound.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  { path: "/404", component: NotFound },
+  { path: "*", redirect: "/404" },
   {
     path: "/",
     redirect: "/connexion",
@@ -53,6 +58,19 @@ const routes = [
         component: Preoccupation,
       },
     ],
+  },
+
+  {
+    path: "/admin",
+    redirect: "/admin/login",
+  },
+  {
+    path: "/admin/login",
+    component: AdminLogin,
+  },
+  {
+    path: "/dashboard",
+    component: Dashboard,
   },
 ];
 

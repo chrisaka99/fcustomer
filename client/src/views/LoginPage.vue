@@ -29,7 +29,7 @@
                 ></b-form-input>
               </div>
 
-              <p v-if="msg">{{ msg }}</p>
+              <p style="color: red;">{{ msg }}</p>
 
               <div class="form-group">
                 <router-link to="/password-forgotten"
@@ -78,13 +78,25 @@ export default {
         .post("http://localhost:3000/api/login", credentials)
         .then((res) => {
           this.msg = res.data.msg;
-          localStorage.setItem("token", res.data.token);
-          this.$router.push("/user");
+          console.log(res.data.msg);
+          if (res.status === 200) {
+            localStorage.setItem("token", res.data.token);
+            this.$router.push("/user");
+          }
         })
         .catch((err) => {
-          console.log(err);
+          this.msg = err.response.data.msg;
+          console.log(err.response);
         });
     },
+  },
+  created() {
+    if (
+      localStorage.getItem("token") !== null ||
+      localStorage.getItem("token") !== undefined
+    ) {
+      this.$router.push("/user");
+    }
   },
 };
 </script>
