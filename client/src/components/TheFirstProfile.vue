@@ -32,19 +32,6 @@
                 </div>
               </span>
             </label>
-
-            <label class="custom-radio">
-              <input type="radio" value="enseignant" v-model="status" />
-              <span class="radio-btn">
-                <span class="icon"
-                  ><font-awesome-icon :icon="['fas', 'check']"
-                /></span>
-                <div class="status-icon text-center">
-                  <img class="img-fluid" src="../assets/teacher.svg" />
-                  <h3>Enseignant</h3>
-                </div>
-              </span>
-            </label>
           </div>
         </div>
 
@@ -159,75 +146,6 @@
                     v-model="selected"
                     :options="options"
                   ></b-form-radio-group>
-                </b-form-group>
-
-                <div class="form-group">
-                  <button type="submit" tag="button" class="button btn-block">
-                    Valider
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          <div v-show="status === 'enseignant'">
-            <div class="col-md-12 offset-md-2 p-sm-5">
-              <div class="mb-sm-5 text-center text-uppercase">
-                <h1>Welcome Professeur</h1>
-              </div>
-              <form
-                @submit.prevent="submitForm"
-                class="justify-content-center"
-                action="/something"
-                method="post"
-                key="form-3"
-              >
-                <b-form-group label="Email" label-for="email-ens">
-                  <b-form-input
-                    id="email-ens"
-                    autocomplete="off"
-                    type="email"
-                    v-model="form2.email"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-form-group label="Nom" label-for="nom-ens">
-                  <b-form-input
-                    id="nom-ens"
-                    autocomplete="off"
-                    type="text"
-                    v-model="form2.nom"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-form-group label="Prénoms" label-for="prenoms-ens">
-                  <b-form-input
-                    id="prenoms-ens"
-                    autocomplete="off"
-                    type="text"
-                    v-model="form2.prenom"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-
-                <b-form-group label="Sexe">
-                  <b-form-radio-group
-                    id="sexe-ens"
-                    v-model="selected"
-                    :options="options"
-                  ></b-form-radio-group>
-                </b-form-group>
-
-                <b-form-group label="Matière" label-for="matiere">
-                  <b-form-input
-                    id="matiere"
-                    autocomplete="off"
-                    type="text"
-                    v-model="form2.matiere"
-                    required
-                  ></b-form-input>
                 </b-form-group>
 
                 <div class="form-group">

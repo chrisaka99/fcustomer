@@ -48,7 +48,6 @@ router.post("/login", function (req, res, next) {
               prenoms: result[0].prenoms,
               dateNais: result[0].dateNais,
               sexe: result[0].sexe,
-              matiere: result[0].matiere,
               promotion: result[0].promotion,
             },
             "MEINSEKRET",
@@ -93,7 +92,7 @@ router.post("/register", validateRegister, function (req, res, next) {
           } else {
             if (req.body.statut === "client") {
               db.query(
-                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, matiere, promotion) VALUES (?,?,?,now(),?,?, NULL, NULL, NULL, NULL,NULL);",
+                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, promotion) VALUES (?,?,?,now(),?,?, NULL, NULL, NULL, NULL);",
                 [
                   req.body.user_id,
                   hash,
@@ -116,7 +115,7 @@ router.post("/register", validateRegister, function (req, res, next) {
               );
             } else if (req.body.statut === "etudiant") {
               db.query(
-                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, matiere, promotion) VALUES (?,?,?,now(),?,?,?,?,?,NULL,?);",
+                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, promotion) VALUES (?,?,?,now(),?,?,?,?,?,?);",
                 [
                   req.body.user_id,
                   hash,
@@ -138,32 +137,6 @@ router.post("/register", validateRegister, function (req, res, next) {
                   }
                   return res.send({
                     msg: "Etudiant créé!",
-                  });
-                }
-              );
-            } else if (req.body.statut === "enseignant") {
-              db.query(
-                "INSERT INTO user(user_id, mdp, email, inscrit, statut, nom, prenoms, dateNais, sexe, matiere, promotion) VALUES (?,?,?,now(),?,?,?,NULL,?,?,NULL);",
-                [
-                  req.body.user_id,
-                  hash,
-                  req.body.email,
-                  req.body.statut,
-                  req.body.nom,
-                  req.body.prenoms,
-                  req.body.sexe,
-                  req.body.matiere,
-                ],
-                (err, result) => {
-                  // console.log(result);
-                  if (err) {
-                    // throw err;
-                    return res.send({
-                      msg: err,
-                    });
-                  }
-                  return res.send({
-                    msg: "Enseignant créé!",
                   });
                 }
               );
@@ -195,7 +168,6 @@ router.get("/user", (req, res, next) => {
       prenom: decode.prenoms,
       dateNais: decode.dateNais,
       sexe: decode.sexe,
-      matiere: decode.matiere,
       promotion: decode.promotion,
     });
     console.log(decode.nom);

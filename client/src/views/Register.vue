@@ -79,17 +79,6 @@
                   </div>
                 </span>
               </label>
-
-              <label class="custom-radio">
-                <input type="radio" value="enseignant" v-model="statut" />
-                <span class="radio-btn">
-                  <span class="icon"><b-icon icon="check"></b-icon></span>
-                  <div class="status-icon text-center">
-                    <img class="img-fluid" src="../assets/teacher.svg" />
-                    <h3>Enseignant</h3>
-                  </div>
-                </span>
-              </label>
             </div>
           </div>
 
@@ -122,37 +111,6 @@
                 v-model="promotion"
                 :options="options"
               ></b-form-select>
-            </div>
-            <b-form-group label="Sexe : ">
-              <b-form-radio v-model="sexe" name="sexe" value="f"
-                >Femme</b-form-radio
-              >
-              <b-form-radio v-model="sexe" name="sexe" value="m"
-                >Homme</b-form-radio
-              >
-            </b-form-group>
-          </div>
-
-          <div v-if="statut == 'enseignant'">
-            <div class="form-group">
-              <label for="prenoms">Prenoms</label>
-              <b-form-input
-                id="prenoms"
-                type="text"
-                autocomplete="off"
-                v-model="prenoms"
-                required
-              ></b-form-input>
-            </div>
-            <div class="form-group">
-              <label for="matiere">Matière</label>
-              <b-form-input
-                id="matiere"
-                type="text"
-                autocomplete="off"
-                v-model="matiere"
-                required
-              ></b-form-input>
             </div>
             <b-form-group label="Sexe : ">
               <b-form-radio v-model="sexe" name="sexe" value="f"
@@ -199,7 +157,6 @@ export default {
       dateNais: "",
       promotion: "",
       sexe: "",
-      matiere: "",
       options: [
         { value: null, text: "Selectionnez une option" },
         { value: "2020", text: "2020" },
@@ -227,7 +184,6 @@ export default {
           prenom: this.prenoms,
           dateNais: this.dateNais,
           sexe: this.sexe,
-          matiere: this.matiere,
           promotion: this.promotion,
         };
 
@@ -250,7 +206,6 @@ export default {
         //   prenom: this.prenoms,
         //   dateNais: this.dateNais,
         //   sexe: this.sexe,
-        //   matiere: this.matiere,
         //   promotion: this.promotion,
         // };
         // const response = await AuthServices.register(credentials);

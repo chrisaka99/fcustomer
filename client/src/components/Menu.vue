@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row align-self-center align-items-center">
-      <div class="col-md-6 col-sm-12 mb-3">
+      <div class="col-md-12 col-sm-12 mb-3">
         <div class="text-center shadow-sm p-2 bg-white">
           <img
             class="img-fluid"
@@ -17,25 +17,6 @@
           <div class="col">
             <button class="boutton">Aller</button>
           </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-12">
-        <div class="text-center shadow-sm p-2 bg-white">
-          <img
-            class="img-fluid"
-            width="200px"
-            src="../assets/files_and_folder_isometric.svg"
-          />
-          <div class="row">
-            <div class="col">
-              <p class="sub">Documentation</p>
-            </div>
-          </div>
-
-          <div class="text-black-50">
-            Accedez aux fichiers qui ont été partagés.
-          </div>
-          <div class="col"><button class="boutton">Aller</button></div>
         </div>
       </div>
     </div>

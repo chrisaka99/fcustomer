@@ -15,12 +15,6 @@
             iText="Statisfaction"
           />
           <ListItems
-            url="/docs"
-            link="docs"
-            iIcon="file-alt"
-            iText="Documents"
-          />
-          <ListItems
             url="/preoccupation"
             link="preoccupation"
             iIcon="question"
