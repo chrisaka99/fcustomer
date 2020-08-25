@@ -4,7 +4,12 @@ const bcrypt = require("bcryptjs");
 const uuid = require("uuid");
 const jwt = require("jsonwebtoken");
 const db = require("../db/mysql");
-const { validateRegister, isLoggedIn } = require("../middleware/user");
+const {
+  validateRegister,
+  isLoggedIn,
+  validateAdminRegister,
+  validateQuestion,
+} = require("../middleware/user");
 
 //?::::::::::::::::::::::::::::::::::::: USER ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
 
@@ -79,7 +84,7 @@ router.post("/register", validateRegister, function (req, res, next) {
     [req.body.user_id],
     (error, result) => {
       if (result.length) {
-        return res.send({
+        return res.status(401).send({
           msg: "L'identifiant existe déjà.",
         });
       } else {
@@ -108,7 +113,7 @@ router.post("/register", validateRegister, function (req, res, next) {
                       msg: err,
                     });
                   }
-                  return res.send({
+                  return res.status(200).send({
                     msg: "Client créé!",
                   });
                 }
@@ -135,7 +140,7 @@ router.post("/register", validateRegister, function (req, res, next) {
                       msg: err,
                     });
                   }
-                  return res.send({
+                  return res.status(200).send({
                     msg: "Etudiant créé!",
                   });
                 }
@@ -170,7 +175,7 @@ router.get("/user", (req, res, next) => {
       sexe: decode.sexe,
       promotion: decode.promotion,
     });
-    console.log(decode.nom);
+    // console.log(decode.nom);
   });
 });
 
@@ -204,7 +209,7 @@ router.post("/preoccupation", (req, res, next) => {
 });
 
 router.post("/suggestions", (req, res, next) => {
-  console.log(req.body);
+  // console.log(req.body);
   db.query(
     "SELECT id FROM user WHERE user_id = ?",
     [req.body.user_id],
@@ -227,13 +232,13 @@ router.post("/suggestions", (req, res, next) => {
 
 //?::::::::::::::::::::::::::::::::::::: ADMIN ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
 
-router.post("/addAdmin", (req, res, next) => {
+router.post("/addAdmin", validateAdminRegister, (req, res, next) => {
   db.query(
     "SELECT * FROM admin WHERE LOWER(admin_id) = LOWER(?);",
     [req.body.admin_id],
     (error, result) => {
       if (result.length) {
-        return res.send({
+        return res.status(401).send({
           msg: "L'identifiant existe déjà.",
         });
       } else {
@@ -245,17 +250,23 @@ router.post("/addAdmin", (req, res, next) => {
             });
           } else {
             db.query(
-              "INSERT INTO admin(admin_id, mdp) VALUES (?,?);",
-              [req.body.admin_id, hash],
+              "INSERT INTO admin(admin_id, mdp, nom, prenoms, email) VALUES (?,?,?,?,?);",
+              [
+                req.body.admin_id,
+                hash,
+                req.body.nom,
+                req.body.prenoms,
+                req.body.email,
+              ],
               (err, result) => {
                 if (err) {
                   // console.log(result);
                   // throw err;
-                  return res.send({
+                  return res.status(401).send({
                     msg: err,
                   });
                 }
-                return res.send({
+                return res.status(200).send({
                   msg: "Admin créé!",
                 });
               }
@@ -300,12 +311,16 @@ router.post("/loginAdmin", function (req, res, next) {
             {
               admin_id: result[0].admin_id,
               mdp: result[0].mdp,
+              nom: result[0].nom,
+              prenom: result[0].mdp,
+              email: result[0].email,
+              id: result[0].id,
             },
             "MEINSEKRET1",
             { expiresIn: "7d" }
           );
 
-          console.log(result[0]);
+          // console.log(result[0]);
           return res.status(200).send({
             msg: "Admin connecté",
             tokenAdmin,
@@ -323,7 +338,7 @@ router.post("/loginAdmin", function (req, res, next) {
 
 router.get("/admin", (req, res, next) => {
   let tokenAdmin = req.headers.token;
-  console.log(tokenAdmin);
+  // console.log(tokenAdmin);
   jwt.verify(tokenAdmin, "MEINSEKRET1", (err, decode) => {
     // console.log(decode);
     if (err) {
@@ -335,9 +350,150 @@ router.get("/admin", (req, res, next) => {
     return res.json({
       msg: "Connecté",
       admin_id: decode.admin_id,
+      nom: decode.nom,
+      prenoms: decode.prenoms,
+      email: decode.email,
       mdp: decode.mdp,
+      id: decode.id,
     });
   });
+});
+
+router.get("/preo", (req, res, next) => {
+  db.query(
+    "SELECT preoccupation.id_user, preoccupation.service, preoccupation.text, user.nom, user.prenoms, user.statut FROM preoccupation INNER JOIN user ON preoccupation.id_user = user.id",
+    (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          msg: "Erreur",
+          erreur: err,
+        });
+      }
+
+      if (result) {
+        // console.log(result);
+        return res.status(200).json({
+          msg: "succès",
+          listpreo: result,
+        });
+      }
+    }
+  );
+});
+
+router.get("/list-users", (req, res, next) => {
+  db.query("SELECT * FROM user", (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        msg: "Erreur",
+        erreur: err,
+      });
+    }
+
+    if (result) {
+      for (i = 0; i < result.length; i++) {
+        result[i].prenoms
+          ? (result[i].fullname = result[i].nom + " " + result[i].prenoms)
+          : (result[i].fullname = result[i].nom);
+      }
+      // console.log(result);
+      return res.status(200).json({
+        msg: "liste users receuillie",
+        listusers: result,
+      });
+    }
+  });
+});
+
+router.get("/list-admin", (req, res, next) => {
+  db.query("SELECT * FROM admin", (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        msg: "Erreur",
+        erreur: err,
+      });
+    }
+
+    if (result) {
+      for (i = 0; i < result.length; i++) {
+        result[i].prenoms
+          ? (result[i].fullname = result[i].nom + " " + result[i].prenoms)
+          : (result[i].fullname = result[i].nom);
+        result[i].statut = "Administrateur";
+      }
+      // console.log(result);
+      return res.status(200).json({
+        msg: "liste admin receuillie",
+        listadmin: result,
+      });
+    }
+  });
+});
+
+router.post("/question", validateQuestion, (req, res, next) => {
+  db.query(
+    "INSERT INTO question(content, id_admin) VALUES(?, ?)",
+    [req.body.content, req.body.id_admin],
+    (err, result) => {
+      if (err) {
+        return res.send({
+          msg: err,
+        });
+      }
+
+      if (result) {
+        // console.log(result);
+        return res.status(200).send({
+          msg: "Question ajoutée",
+        });
+      }
+    }
+  );
+});
+
+router.get("/question", (req, res, next) => {
+  db.query("SELECT * FROM question", (err, result) => {
+    if (err) {
+      return res.status(401).json({ msg: err });
+    }
+    if (result) {
+      return res.status(200).json({ msg: "QUESTIONS LIST GOT!", list: result });
+    }
+  });
+});
+
+router.get("/question/:id", (req, res, next) => {
+  db.query(
+    "SELECT * FROM question WHERE id = ?",
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ msg: "QUESTIONS LIST GOT!", list: result });
+      }
+    }
+  );
+});
+
+router.post("/questionVue", (req, res, next) => {
+  db.query(
+    "SELECT DISTINCT reponses.content, user.nom, user.prenoms, user.statut FROM reponses INNER JOIN question ON reponses.id_question = ? INNER JOIN user ON user.id = reponses.id_user",
+    [req.body.id],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ msg: "QUESTIONS LIST GOT!", list: result });
+      }
+    }
+  );
 });
 
 module.exports = router;

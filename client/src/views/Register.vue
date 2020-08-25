@@ -191,25 +191,12 @@ export default {
           .post("http://localhost:3000/api/register", newUser)
           .then((res) => {
             this.msg = res.data.msg;
+            this.$router.push("/user");
           })
           .catch((error) => {
             this.msg = error.response.data.msg;
             console.log(error.response);
           });
-        // const credentials = {
-        //   user_id: this.user_id,
-        //   mdp: this.mdp,
-        //   nom: this.nom,
-        //   remdp: this.remdp,
-        //   email: this.email,
-        //   statut: this.statut,
-        //   prenom: this.prenoms,
-        //   dateNais: this.dateNais,
-        //   sexe: this.sexe,
-        //   promotion: this.promotion,
-        // };
-        // const response = await AuthServices.register(credentials);
-        // this.msg = response.msg;
       } catch (error) {
         // this.msg = error.response.data.msg;
       }
