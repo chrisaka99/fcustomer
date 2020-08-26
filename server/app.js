@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
 var indexRouter = require("./routes/index");
+var bodyParser = require("body-parser");
 
 var app = express();
 
@@ -12,6 +13,11 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(cors());

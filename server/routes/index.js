@@ -44,8 +44,9 @@ router.post("/login", function (req, res, next) {
         if (bResult) {
           const token = jwt.sign(
             {
+              id: result[0].id,
               user_id: result[0].user_id,
-              mdp: result[0].mdp,
+              // mdp: result[0].mdp,
               email: result[0].email,
               inscrit: result[0].inscrit,
               statut: result[0].statut,
@@ -208,6 +209,23 @@ router.post("/preoccupation", (req, res, next) => {
   );
 });
 
+router.get("/list_preo", (req, res, next) => {
+  db.query(
+    "SELECT * FROM preoccupation WHERE id_user = ?",
+    [req.body.id],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ msg: "preoccupation list got", list: result });
+      }
+    }
+  );
+});
+
 router.post("/suggestions", (req, res, next) => {
   // console.log(req.body);
   db.query(
@@ -225,6 +243,25 @@ router.post("/suggestions", (req, res, next) => {
             if (result1) return res.json({ msg: "Suggestion soumise !" });
           }
         );
+      }
+    }
+  );
+});
+
+router.get("/list_suggest", (req, res, next) => {
+  console.log(req.body);
+  db.query(
+    "SELECT * FROM suggestions WHERE id_user = ?",
+    [req.body.id_user],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        console.log(result);
+        return res
+          .status(200)
+          .json({ msg: "suggestions list got", list: result });
       }
     }
   );
