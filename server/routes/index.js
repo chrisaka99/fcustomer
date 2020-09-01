@@ -185,7 +185,7 @@ router.get("/secret-route", isLoggedIn, function (req, res, next) {
   res.send("This is the secret content. Only logged in users can see that!");
 });
 
-//?::::::::::::::::::::::::::::::::::::: FONCTIONNALITY ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
+//?::::::::::::::::::::::::::::::::::::: FONCTIONNALITY ROUTES ::::::::::::::::::::::::::::::::::::::::::://
 
 router.post("/preoccupation", (req, res, next) => {
   // console.log(req.body);
@@ -209,10 +209,12 @@ router.post("/preoccupation", (req, res, next) => {
   );
 });
 
-router.get("/list_preo", (req, res, next) => {
+router.get("/list_preo/:id", (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
   db.query(
     "SELECT * FROM preoccupation WHERE id_user = ?",
-    [req.body.id],
+    [id],
     (err, result) => {
       if (err) {
         return res.status(401).json({ msg: err });
@@ -248,17 +250,18 @@ router.post("/suggestions", (req, res, next) => {
   );
 });
 
-router.get("/list_suggest", (req, res, next) => {
-  console.log(req.body);
+router.get("/suggest/:id", (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
   db.query(
     "SELECT * FROM suggestions WHERE id_user = ?",
-    [req.body.id_user],
+    [id],
     (err, result) => {
       if (err) {
         return res.status(401).json({ msg: err });
       }
       if (result) {
-        console.log(result);
+        // console.log(result);
         return res
           .status(200)
           .json({ msg: "suggestions list got", list: result });
