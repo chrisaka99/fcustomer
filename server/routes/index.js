@@ -185,7 +185,7 @@ router.get("/secret-route", isLoggedIn, function (req, res, next) {
   res.send("This is the secret content. Only logged in users can see that!");
 });
 
-//?::::::::::::::::::::::::::::::::::::: FONCTIONNALITY ROUTES ::::::::::::::::::::::::::::::::::::::::::://
+//?::::::::::::::::::::::::::::::::::::: FONCTIONNALITY ROUTES ::::::::::::::::::::::::::::::::::::://
 
 router.post("/preoccupation", (req, res, next) => {
   // console.log(req.body);
@@ -270,7 +270,103 @@ router.get("/suggest/:id", (req, res, next) => {
   );
 });
 
-//?::::::::::::::::::::::::::::::::::::: ADMIN ROUTES ::::::::::::::::::::::::::::::::::::::::::::://
+router.post("/rate_invest", (req, res, next) => {
+  db.query(
+    "INSERT INTO question (note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+    [
+      req.body.val1,
+      req.body.val2,
+      req.body.val3,
+      req.body.val4,
+      req.body.val5,
+      req.body.val6,
+      req.body.val7,
+      req.body.val8,
+      req.body.val9,
+      req.body.val10,
+      req.body.val11,
+      req.body.val12,
+      req.body.val3,
+      req.body.val14,
+      req.body.val15,
+    ]
+  );
+});
+
+router.get("/formation/:id", (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
+  db.query("SELECT * FROM formation WHERE etu_id = ?", [id], (err, result) => {
+    if (err) {
+      return res.status(401).json({ msg: err });
+    }
+    if (result) {
+      return res.status(200).json({ msg: "formation list got", list: result });
+    }
+  });
+});
+
+router.post("/formation", (req, res, next) => {
+  let id = req.body.id;
+  let note = req.body.note;
+  console.log(id);
+  console.log(note);
+  db.query(
+    "INSERT INTO formation(libelle_formation) VALUES(?) WHERE etu_id = ?",
+    [note, id],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ msg: "Formations évaluées", list: result });
+      }
+    }
+  );
+});
+
+router.get("/prestation/:id", (req, res, next) => {
+  let id = req.params.id;
+  console.log(id);
+  db.query(
+    "SELECT * FROM prestation WHERE id_client = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ msg: "prestation list got", list: result });
+      }
+    }
+  );
+});
+router.post("/prestation", (req, res, next) => {
+  let id = req.body.id;
+  let note = req.body.note;
+  console.log(id);
+  console.log(note);
+  db.query(
+    "INSERT INTO prestation(libelle) VALUES(?) WHERE id_client = ?",
+    [note, id],
+    (err, result) => {
+      if (err) {
+        return res.status(401).json({ msg: err });
+      }
+      if (result) {
+        return res
+          .status(200)
+          .json({ msg: "Prestations evaluées", list: result });
+      }
+    }
+  );
+});
+
+//?::::::::::::::::::::::::::::::::::::: ADMIN ROUTES ::::::::::::::::::::::::::::::::::::://
 
 router.post("/addAdmin", validateAdminRegister, (req, res, next) => {
   db.query(
